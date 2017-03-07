@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,6 +10,129 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20170303084907) do
 
+  create_table "activities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "action_id"
+    t.integer  "action_type"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_activities_on_user_id", using: :btree
+  end
+
+  create_table "bookmarks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "word_id"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bookmarks_on_user_id", using: :btree
+    t.index ["word_id"], name: "index_bookmarks_on_word_id", using: :btree
+  end
+
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_categories_on_user_id", using: :btree
+  end
+
+  create_table "dictionaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "status"
+    t.string   "description"
+    t.string   "image"
+    t.integer  "category_id"
+    t.integer  "user_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id"], name: "index_dictionaries_on_category_id", using: :btree
+    t.index ["user_id"], name: "index_dictionaries_on_user_id", using: :btree
+  end
+
+  create_table "organization_members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "role"
+    t.integer  "user_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["organization_id"], name: "index_organization_members_on_organization_id", using: :btree
+    t.index ["user_id"], name: "index_organization_members_on_user_id", using: :btree
+  end
+
+  create_table "organizations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "image"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.float    "rating",        limit: 24
+    t.integer  "dictionary_id"
+    t.integer  "user_id"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["dictionary_id"], name: "index_reviews_on_dictionary_id", using: :btree
+    t.index ["user_id"], name: "index_reviews_on_user_id", using: :btree
+  end
+
+  create_table "shared_dictionaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "dictionary_id"
+    t.integer  "organization_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["dictionary_id"], name: "index_shared_dictionaries_on_dictionary_id", using: :btree
+    t.index ["organization_id"], name: "index_shared_dictionaries_on_organization_id", using: :btree
+  end
+
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "email"
+    t.string   "encrypted_password"
+    t.string   "address"
+    t.string   "image"
+    t.string   "phone"
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "word_details", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "kind"
+    t.string   "meaning"
+    t.integer  "word_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["word_id"], name: "index_word_details_on_word_id", using: :btree
+  end
+
+  create_table "words", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "content"
+    t.string   "meaning"
+    t.integer  "dictionary_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["dictionary_id"], name: "index_words_on_dictionary_id", using: :btree
+  end
+
+  add_foreign_key "activities", "users"
+  add_foreign_key "bookmarks", "users"
+  add_foreign_key "bookmarks", "words"
+  add_foreign_key "categories", "users"
+  add_foreign_key "dictionaries", "categories"
+  add_foreign_key "dictionaries", "users"
+  add_foreign_key "organization_members", "organizations"
+  add_foreign_key "organization_members", "users"
+  add_foreign_key "reviews", "dictionaries"
+  add_foreign_key "reviews", "users"
+  add_foreign_key "shared_dictionaries", "dictionaries"
+  add_foreign_key "shared_dictionaries", "organizations"
+  add_foreign_key "word_details", "words"
+  add_foreign_key "words", "dictionaries"
 end
