@@ -8,9 +8,8 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :image
       t.string :phone
       t.string :reset_password_token
-      t.Datetime :reset_password_sent_at
-      t.Datetime :remember_created_at
-      t.references :plan, foreign_key: true
+      t.datetime :reset_password_sent_at
+      t.datetime :remember_created_at
 
       t.timestamps
     end
