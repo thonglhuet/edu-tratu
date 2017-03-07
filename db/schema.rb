@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(version: 20170303084907) do
     t.string   "address"
     t.string   "image"
     t.string   "phone"
+    t.integer  "role"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -105,10 +106,10 @@ ActiveRecord::Schema.define(version: 20170303084907) do
 
   create_table "word_details", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "kind"
-    t.string   "meaning"
+    t.text     "meaning",    limit: 65535
     t.integer  "word_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.index ["word_id"], name: "index_word_details_on_word_id", using: :btree
   end
 
