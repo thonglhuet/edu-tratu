@@ -18,6 +18,7 @@ module #{(`echo $REPO_URL`.gsub("\n", "").presence || Dir.pwd).split("/").last.g
     config.active_record.time_zone_aware_attributes = false
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
     config.autoload_paths << Rails.root.join("lib")
+    config.autoload_paths << Rails.root.join('services')
 
     Dir.glob("config/routes/*").each do |route|
       config.paths["config/routes.rb"] << Rails.root.join(route)

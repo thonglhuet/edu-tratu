@@ -1,4 +1,9 @@
 var Header = React.createClass({
+  getInitialState: function(){
+    return {
+      categories: this.props.categories,
+    }
+  },
   render: function(){
     return(
       <div className='header-container'>
@@ -39,7 +44,7 @@ var Header = React.createClass({
         <div className='header-main'>
           <Slider />
           <div className='search-container'>
-            <Search />
+            <Search categories = {this.state.categories}/>
           </div>
         </div>
       </div>

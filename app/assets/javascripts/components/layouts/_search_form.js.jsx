@@ -2,7 +2,9 @@ var Search = React.createClass({
   getInitialState: function(){
     return {
       selectValue: '',
-      selectIdValue: ''
+      selectIdValue: this.props.categories[0].id,
+      categories: $.map(this.props.categories, function (value,index) { return value; }),
+      searchValue: ''
     }
   },
   handleChangeValue: function(e){
@@ -10,10 +12,32 @@ var Search = React.createClass({
       selectValue: e.target.text,
       selectIdValue: e.target.value
     })
-    console.log(this.state.selectIdValue)
+  },
+  handleChange: function(e){
+    this.setState({
+      searchValue: e.target.value
+    });
+  },
+  handleOnSubmit: function(e){
+    e.preventDefault()
+    console.log(this.state.searchValue)
+    $.ajax({
+      url: '/searchs',
+      dataType: 'json',
+      data:{q: this.state.searchValue, category_id: this.state.selectIdValue},
+      success: function(data){
+       console.log(data)
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('/searchs', status, err.toString());
+      }
+    })
+  },
+  makeCategorySelection: function(category){
+    return <option key={category.id} value={category.id}>{category.name}</option>
   },
   handleGetValue: function(e){
-    this.replaceState({
+    this.setState({
       selectValue: e.target.text,
       selectIdValue: e.target.value
     })
@@ -24,28 +48,27 @@ var Search = React.createClass({
       <div className='container'>
         <div className='row'>
           <div className='col-md-8 col-xs-12 box-search'>
-            <div className='input-group'>
-              <div className='input-group-btn search-panel' id='search-panel'>
-                <select className='btn btn-default dropdown-toggle search-btn'
-                  defaultValue={this.state.selectValue} role='menu' onChange={this.handleChangeValue}>
-                  <option value='1'>English</option>
-                  <option value='2'>English-VietNam</option>
-                </select>
+            <form onSubmit={this.handleOnSubmit}>
+              <div className='input-group'>
+                <div className='input-group-btn search-panel' id='search-panel'>
+                  <select className='btn btn-default dropdown-toggle search-btn'
+                    defaultValue={this.state.selectValue} role='menu' onChange={this.handleChangeValue}>
+                      {this.state.categories.map(this.makeCategorySelection)}
+                  </select>
+                </div>
+                <input type='text' className='form-control search-btn' onChange={this.handleChange}
+                  value={this.state.searchValue} placeholder='Search term...' />
+                <span className='input-group-btn'>
+                  <button className='btn btn-default search-btn' type='submit'>
+                    <span className='glyphicon glyphicon-search'></span>
+                  </button>
+                </span>
               </div>
-              <input type='hidden' name='search_param' value='all' id='search_param' />
-              <input type='text' className='form-control search-btn' name='x' placeholder='Search term...' />
-              <span className='input-group-btn'>
-                <button className='btn btn-default search-btn' type='button'>
-                  <span className='glyphicon glyphicon-search'></span>
-                </button>
-              </span>
-            </div>
-            <div className='category-list'>
-              <ul>
-                <li><a className='btn' value='1' onClick={this.handleGetValue}>English</a></li>
-                <li><a className='btn' value='2' onClick={this.handleGetValue}>English-VietNam</a></li>
-              </ul>
-            </div>
+              <div className='category-list'>
+                <ul>
+                </ul>
+              </div>
+            </form>
           </div>
           <div className='col-md-4 col-xs-12'>
             <div className='box-register'>
