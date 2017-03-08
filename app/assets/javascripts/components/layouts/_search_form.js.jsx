@@ -1,9 +1,10 @@
 var Search = React.createClass({
   getInitialState: function(){
+    let categories = this.props.categories;
     return {
       selectValue: '',
-      selectIdValue: this.props.categories[0].id,
-      categories: $.map(this.props.categories, function (value,index) { return value; }),
+      selectIdValue: categories.length > 0 ? categories[0].id : null,
+      categories: $.map(categories, function (value,index) { return value; }),
       searchValue: ''
     }
   },

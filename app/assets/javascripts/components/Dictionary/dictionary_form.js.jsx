@@ -1,9 +1,11 @@
 var DictionaryForm = React.createClass({
   getInitialState: function() {
+    let categories = this.props.categories;
     return {
-      category_id: this.props.categories[0].id,
+      category_id: categories.length > 0 ? categories[0].id : null,
       name: '',
-      description: ''    }
+      description: ''
+    }
   },
   handleChange: function(e) {
     var name = e.target.name;
@@ -32,10 +34,10 @@ var DictionaryForm = React.createClass({
     return (
       <form className='form-inline' onSubmit={this.handleSubmit}>
         <div className='form-group'>
-            <select className='form-control' name='category_id'
-            onChange={this.handleChange}>
-              {this.props.categories.map(this.makeCategorySelection)}
-            </select>
+          <select className='form-control' name='category_id'
+          onChange={this.handleChange}>
+            {this.props.categories.map(this.makeCategorySelection)}
+          </select>
         </div>
         <div className='form-group'>
           <input type='text' className='form-control' placeholder='Name'
