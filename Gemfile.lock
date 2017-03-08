@@ -573,9 +573,6 @@ GEM
       simplecov
     simplecov-rcov (0.2.3)
       simplecov (>= 0.4.1)
-    slim (3.0.7)
-      temple (~> 0.7.6)
-      tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
     spring (2.0.0)
       activesupport (>= 4.2)
@@ -599,7 +596,6 @@ GEM
     state_machines-activerecord (0.4.0)
       activerecord (>= 4.1, < 5.1)
       state_machines-activemodel (>= 0.3.0)
-    temple (0.7.7)
     therubyracer (0.12.2)
       libv8 (~> 3.16.14.0)
       ref
@@ -704,7 +700,6 @@ DEPENDENCIES
   simplecov-json
   simplecov-rcov
   sinatra!
-  slim
   spring
   spring-watcher-listen (~> 2.0.0)
   state_machines-activerecord

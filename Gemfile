@@ -5,8 +5,6 @@ ruby "2.3.1"
 gem "rails", ">= 5.0.0.rc1", "< 5.1"
 # Use mysql as the database for Active Record
 gem "mysql2", ">= 0.3.18", "< 0.5"
-# Use Puma as the app server
-# gem "puma", "~> 3.0"
 # Use SCSS for stylesheets
 gem "sass-rails", "~> 5.0"
 # Use Uglifier as compressor for JavaScript assets
@@ -82,6 +80,8 @@ group :staging, :production do
   gem "passenger", ">= 5.0.25", require: "phusion_passenger/rack_handler"
   gem "capistrano3-unicorn"
   gem "unicorn"
+  # Use Puma as the app server
+  # gem "puma", "~> 3.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -100,7 +100,6 @@ gem "redis-rails", git: "https://github.com/redis-store/redis-rails.git", branch
 gem "redis-namespace"
 gem "sinatra", git: "https://github.com/sinatra/sinatra.git"
 gem "figaro"
-gem "slim"
 gem "cancancan"
 gem "paranoia", git: "https://github.com/rubysherpas/paranoia.git", branch: "rails4"
 gem "ransack"
@@ -109,4 +108,3 @@ gem "carrierwave"
 gem "fog"
 gem "aws-sdk", "~> 1.66.0"
 gem "capistrano-faster-assets"
-gem "react-rails"

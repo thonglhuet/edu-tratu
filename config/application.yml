@@ -12,7 +12,7 @@ S3_BUCKET_NAME: "S3_BUCKET_NAME"
 DATABASE_HOSTNAME: "localhost"
 DATABASE_NAME: "edu_tratu_development"
 DATABASE_USERNAME: "root"
-DATABASE_PASSWORD: "root"
+DATABASE_PASSWORD: ""
 REDIS_HOSTNAME: "localhost"
 
 RAILS_ENV: "development"
