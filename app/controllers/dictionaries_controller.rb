@@ -1,14 +1,46 @@
 class DictionariesController < ApplicationController
+  before_action :logged_in_user
+  before_action :load_dictionary, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @dictionaries = current_user.dictionaries.order_by("name")
+    @categories = current_user.categories
+    @dictionaries = @dictionaries.as_json only: [:id, :name, :description],
+      include: {category: {only: [:id, :name]}}
+    @categories = @categories.as_json
+  end
+
+  def show
+  end
+
   def new
     @dictionary = Dictionary.new
-    @categories = Category.all
+  end
+
+  def edit
   end
 
   def create
     @dictionary = Dictionary.new dictionary_params
-    @dictionary.user_id = 1
+    @dictionary.user_id = current_user.id
     if @dictionary.save
-      render json: @dictionary
+      render json: Dictionary.belongs_user(current_user.id).order_by("name")
+    else
+      render json: @dictionary.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update
+    if @dictionary.update dictionary_params
+      render json: Dictionary.belongs_user(current_user.id).order_by("name")
+    else
+      render json: @dictionary.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @dictionary.destroy
+      render json: Dictionary.belongs_user(current_user.id).order_by("name")
     else
       render json: @dictionary.errors, status: :unprocessable_entity
     end
@@ -16,7 +48,12 @@ class DictionariesController < ApplicationController
 
   private
 
+  def load_dictionary
+    @dictionary = Dictionary.find params[:id]
+    render_404 unless @dictionary
+  end
+
   def dictionary_params
-    params.require(:dictionary).permit :category_id, :name, :description
+    params.require(:dictionary).permit Dictionary::ATTR_PARAMS
   end
 end
