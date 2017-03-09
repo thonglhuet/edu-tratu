@@ -3,8 +3,8 @@ namespace :db do
   task remake_data: :environment do
        Rake::Task["db:migrate:reset"].invoke
        puts "Creating user Manager"
-       user = User.create! email: "admin@gmail.com", encrypted_password: "123456",
-         name: "Hoang Duc Trung", role: 0
+       user = User.create! email: "admin@gmail.com", password: "123456",
+        password_confirmation: "123456", name: "Hoang Duc Trung", role: 0
        puts "Creating categories"
        categories_hash = {
         "Accountancy": "This is Accountancy",
