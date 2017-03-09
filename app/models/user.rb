@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+    :recoverable, :rememberable, :trackable, :validatable
   belongs_to :plan
   has_many :organization_members
   has_many :reviews

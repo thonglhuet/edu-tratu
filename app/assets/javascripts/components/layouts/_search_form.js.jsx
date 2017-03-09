@@ -5,7 +5,9 @@ var Search = React.createClass({
       selectValue: '',
       selectIdValue: categories.length > 0 ? categories[0].id : null,
       categories: $.map(categories, function (value,index) { return value; }),
-      searchValue: ''
+      searchValue: '',
+      showModal: false,
+      words: []
     }
   },
   handleChangeValue: function(e){
@@ -21,13 +23,13 @@ var Search = React.createClass({
   },
   handleOnSubmit: function(e){
     e.preventDefault()
-    console.log(this.state.searchValue)
     $.ajax({
       url: '/searchs',
       dataType: 'json',
       data:{q: this.state.searchValue, category_id: this.state.selectIdValue},
       success: function(data){
-       console.log(data)
+      this.setState({words: data})
+      this.handleShowModal()
       }.bind(this),
       error: function(xhr, status, err){
         console.error('/searchs', status, err.toString());
@@ -37,12 +39,15 @@ var Search = React.createClass({
   makeCategorySelection: function(category){
     return <option key={category.id} value={category.id}>{category.name}</option>
   },
-  handleGetValue: function(e){
+  handleHideModal: function(){
     this.setState({
-      selectValue: e.target.text,
-      selectIdValue: e.target.value
-    })
-    alert(this.state.selectValue)
+      showModal: false
+    });
+  },
+  handleShowModal: function(){
+    this.setState({
+      showModal: true,
+    });
   },
   render: function(){
     return(
@@ -80,6 +85,7 @@ var Search = React.createClass({
             </div>
           </div>
         </div>
+        {this.state.showModal ? <Modal handleHideModal={this.handleHideModal} words={this.state.words}/> : null}
       </div>
     )
   }
