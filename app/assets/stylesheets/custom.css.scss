@@ -1,20 +1,21 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import "bootstrap-sprockets";
-@import "bootstrap";
+@import 'bootstrap-sprockets';
+@import 'bootstrap';
+
 body {
-  font-size: 14px;
-  color: #666;
   background-color: #f7f7f7;
-  line-height: 20px;
+  color: #666;
   font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 header {
   background-color: #292929;
   color: #fff;
   .navbar {
-    border-radius: 0px;
-    margin-bottom: 0px;
+    border-radius: 0;
+    margin-bottom: 0;
     border: inherit;
   }
   #logo {
