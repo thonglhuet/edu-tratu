@@ -3,8 +3,8 @@ class Word < ApplicationRecord
   has_many :word_details
   has_many :bookmarks
 
-  scope :sought, ->(q, category_id) do
+  scope :sought, lambda {|q, category_id|
     joins(:dictionary).merge(Dictionary.find_by_category(category_id))
       .where "content LIKE ?", "%#{q}%" if q.present?
-  end
+  }
 end
