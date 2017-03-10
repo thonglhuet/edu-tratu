@@ -5,7 +5,12 @@ class Dictionary < ApplicationRecord
   has_many :organizations, through: :shared_dictionaries
   has_many :words
 
-  scope :find_by_category, ->category_id do
+  validates :name, presence: true, length: {minimum: 5}
+  validates :description, presence: true, length: {minimum: 5}
+
+  scope :find_by_category, lambda {|category_id|
     where category_id: category_id
-  end
+  }
+  scope :order_by, ->by {order("#{by}")}
+  ATTR_PARAMS = [:name, :description, :category_id].freeze
 end
