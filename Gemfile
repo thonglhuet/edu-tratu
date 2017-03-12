@@ -13,7 +13,7 @@ gem "uglifier", ">= 1.3.0"
 # gem "therubyracer", platforms: :ruby
 
 # Use jquery as the JavaScript library
-gem "jquery-rails"
+# gem "jquery-rails"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 3.0"
 # Use ActiveModel has_secure_password
@@ -22,11 +22,9 @@ gem "jquery-rails"
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development
 gem "nokogiri", "~> 1.6.8"
-gem "bootstrap-sass"
 gem "react-rails"
 gem "react-rails-img"
 gem "js-routes"
-gem "font-awesome-rails"
 gem "active_model_serializers", "~> 0.10.0"
 
 group :development, :test do

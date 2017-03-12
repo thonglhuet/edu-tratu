@@ -19,6 +19,10 @@ module #{(`echo $REPO_URL`.gsub("\n", "").presence || Dir.pwd).split("/").last.g
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
     config.autoload_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join('services')
+    Rails.root.join("vendor", "assets", "bower_components")
+    config.assets.paths << Rails.root.join("vendor", "assets", "bower_components",
+      "bootstrap-sass", "assets", "fonts")
+    config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
 
     Dir.glob("config/routes/*").each do |route|
       config.paths["config/routes.rb"] << Rails.root.join(route)

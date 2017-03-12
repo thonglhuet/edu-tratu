@@ -11,11 +11,18 @@
 // about supported directives.
 //
 //= require jquery
-//= require bootstrap-sprockets
-//= require jquery_ujs
+//= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
+//= require jquery-ujs
 //= require react
 //= require react_ujs
 //=  require js-routes
 //= require components
 //= require react_rails_img
 //= require_tree .
+$(document).ready(function(){
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+});
