@@ -2,9 +2,66 @@ var Header = React.createClass({
   getInitialState: function(){
     return {
       categories: this.props.categories,
+      signedIn: null,
+      showModal: false,
+      user: null
     }
   },
+  componentWillMount: function(){
+    $.ajax({
+      method: 'GET',
+      url: '/auth',
+      dataType: 'json',
+      success: function(data){
+      this.setState({
+        signedIn: data.signed_in,
+        user: data.signed_in ? data.user.name : null
+      })
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.error('/auth', status, err.toString());
+      }
+    })
+  },
+  handleHideModal: function(){
+    this.setState({
+      showModal: false
+    });
+  },
+  handleShowModal: function(){
+    this.setState({
+      showModal: true,
+    });
+  },
+  onClick: function(e){
+    e.preventDefault()
+    this.setState({
+      showModal: true,
+    });
+  },
+  _signOut: function(e) {
+    $.ajax({
+      method: 'delete',
+      url: '/users/sign_out'
+    }).done(function(){
+      location.reload();
+    })
+  },
   render: function(){
+    let login = (
+      <li><a href='' className='btn-login' onClick={this.onClick}>
+        <i className='fa fa-user'></i>Login</a>
+      </li>
+    )
+    let logout = (
+        <li><a href='' className='btn-login' onClick={this._signOut}>
+          <i className='fa fa-user'></i>Logout</a>
+        </li>
+    )
+    let user = (
+      <li><a href='#'><i>Welcome {this.state.user}</i></a></li>
+    )
+
     return(
       <div className='header-container'>
         <header>
@@ -26,7 +83,8 @@ var Header = React.createClass({
                   <li><a href=''>Contact</a></li>
                 </ul>
                 <ul className='nav navbar-nav navbar-right'>
-                  <li><a href='' className='btn-login'><i className='fa fa-user'></i>Login</a></li>
+                  {this.state.signedIn ? user : null}
+                  {this.state.signedIn ? logout : login}
                   <li>
                     <ul className='social'>
                       <li><a href='#' className='icon-facebook'><i className='fa fa-facebook'></i></a></li>
@@ -46,6 +104,7 @@ var Header = React.createClass({
             <Search categories = {this.state.categories}/>
           </div>
         </div>
+        {this.state.showModal ? <Login handleHideModal={this.handleHideModal} /> : null}
       </div>
     )
   }
