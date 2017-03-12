@@ -6,8 +6,8 @@ var Search = React.createClass({
       selectIdValue: categories.length > 0 ? categories[0].id : null,
       categories: $.map(categories, function (value,index) { return value; }),
       searchValue: '',
-      showModal: false,
-      words: []
+      words: [],
+      didFetchData: false
     }
   },
   handleChangeValue: function(e){
@@ -20,34 +20,30 @@ var Search = React.createClass({
     this.setState({
       searchValue: e.target.value
     });
+    this.fetchDataDone(e.target.value)
   },
-  handleOnSubmit: function(e){
-    e.preventDefault()
+  fetchDataDone: function(search){
     $.ajax({
       url: '/searchs',
       dataType: 'json',
-      data:{q: this.state.searchValue, category_id: this.state.selectIdValue},
+      data:{q: search, category_id: this.state.selectIdValue},
       success: function(data){
-      this.setState({words: data})
-      this.handleShowModal()
+      this.setState({
+        words: data,
+        didFetchData: true
+      })
       }.bind(this),
       error: function(xhr, status, err){
         console.error('/searchs', status, err.toString());
       }
     })
   },
+  handleOnSubmit: function(e){
+    e.preventDefault()
+    this.fetchDataDone(this.state.searchValue)
+  },
   makeCategorySelection: function(category){
     return <option key={category.id} value={category.id}>{category.name}</option>
-  },
-  handleHideModal: function(){
-    this.setState({
-      showModal: false
-    });
-  },
-  handleShowModal: function(){
-    this.setState({
-      showModal: true,
-    });
   },
   render: function(){
     return(
@@ -57,12 +53,12 @@ var Search = React.createClass({
             <form onSubmit={this.handleOnSubmit}>
               <div className='input-group'>
                 <div className='input-group-btn search-panel' id='search-panel'>
-                  <select className='btn btn-default dropdown-toggle search-btn'
+                  <select className='form-control dropdown-toggle search-btn'
                     defaultValue={this.state.selectValue} role='menu' onChange={this.handleChangeValue}>
                       {this.state.categories.map(this.makeCategorySelection)}
                   </select>
                 </div>
-                <input type='text' className='form-control search-btn' onChange={this.handleChange}
+                <input type='text' className='form-control search-btn' ref='search' onChange={this.handleChange}
                   value={this.state.searchValue} placeholder='Search term...' />
                 <span className='input-group-btn'>
                   <button className='btn btn-default search-btn' type='submit'>
@@ -85,7 +81,11 @@ var Search = React.createClass({
             </div>
           </div>
         </div>
-        {this.state.showModal ? <Modal handleHideModal={this.handleHideModal} words={this.state.words}/> : null}
+        <div className='row'>
+          <div className='col-md-8 col-xs-12 words-list'>
+            {this.state.didFetchData ? <Words words={this.state.words}/> : null}
+          </div>
+        </div>
       </div>
     )
   }

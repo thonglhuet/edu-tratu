@@ -42,7 +42,6 @@ var Header = React.createClass({
           </nav>
         </header>
         <div className='header-main'>
-          <Slider />
           <div className='search-container'>
             <Search categories = {this.state.categories}/>
           </div>
