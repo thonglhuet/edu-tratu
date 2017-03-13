@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_category, only: [:update, :destroy]
-  before_action :update_category_params, only: :create
 
   def index
     @categories = current_user.categories.as_json
@@ -12,8 +11,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    @category = Category.new cate_params
-    @category.user_id = current_user.id
+    @category = current_user.categories.build category_params
     if @category.save
       if category_params[:dictionaries_attributes]
         render json: current_user.dictionaries
@@ -50,12 +48,6 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit Category::ATTR_PARAMS,
-      dictionaries_attributes: [:name, :description]
-  end
-
-  def update_category_params
-    @cate_params = category_params
-    @cate_params[:dictionaries_attributes]["0"][:user_id] = current_user.id if
-      category_params[:dictionaries_attributes]
+      dictionaries_attributes: Dictionary::ATTR_PARAMS_NESTED
   end
 end

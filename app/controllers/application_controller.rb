@@ -5,10 +5,9 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def logged_in_user
-    unless user_signed_in?
-      flash["danger"] = t "danger_err_login"
-      redirect_to new_user_session_path
-    end
+    return true if user_signed_in?
+    flash["danger"] = t "danger_err_login"
+    redirect_to new_user_session_path
   end
 
   private

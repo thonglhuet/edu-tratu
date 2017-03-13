@@ -8,6 +8,7 @@ class DictionariesController < ApplicationController
     @dictionaries = @dictionaries.as_json only: [:id, :name, :description],
       include: {category: {only: [:id, :name]}}
     @categories = @categories.as_json
+    @user_id = current_user.id
   end
 
   def show
@@ -21,8 +22,7 @@ class DictionariesController < ApplicationController
   end
 
   def create
-    @dictionary = Dictionary.new dictionary_params
-    @dictionary.user_id = current_user.id
+    @dictionary = current_user.dictionaries.build dictionary_params
     if @dictionary.save
       render json: current_user.dictionaries.order_by("name")
     else

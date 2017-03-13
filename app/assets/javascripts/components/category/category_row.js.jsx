@@ -3,7 +3,8 @@ var CategoryRow = React.createClass({
     return ( {id: this.props.id, name: this.props.name,
       description: this.props.description, edit: false, formErrors: {}} )
   },
-  editCategory: function(){
+  editCategory: function(e){
+    e.preventDefault();
     this.setState({edit: true});
   },
   cancelEdit: function(e){
@@ -33,9 +34,7 @@ var CategoryRow = React.createClass({
   },
   deleteCategory: function(e) {
     e.preventDefault();
-    if (confirm('Delete category?')) {
-      this.props.parentDeleteCategory({id: this.state.id});
-    }
+    this.props.parentDeleteCategory({id: this.state.id});
   },
   renderFieldErrors: function(attribute){
     if(this.state.formErrors[attribute]){
@@ -93,43 +92,41 @@ var CategoryRow = React.createClass({
   render: function() {
     if(this.state.edit == false){
       return(
-        <div className="row dic_row">
-          <div className="col-sm-1">
-            <button className='btn btn-sm btn-primary' onClick={this.editCategory}>
-              Edit
-            </button>
-          </div>
-          <div className="col-sm-1">
-            <button className='btn btn-sm btn-danger' onClick={this.deleteCategory}>
-              Delete
-            </button>
-          </div>
-          <div className="col-sm-2">
+        <tr className="dic_row">
+          <td>{this.props.index + 1}</td>
+          <td>
             {this.props.name}
-          </div>
-          <div className="col-sm-4">
+          </td>
+          <td>
             {this.props.description}
-          </div>
-        </div>
+          </td>
+          <td>
+            <a href="#" className='btn btn-info btn-round' onClick={this.editCategory}>
+              <i className="fa fa-pencil"></i>
+            </a>
+            <a href="#" className='btn btn-danger btn-round' onClick={this.deleteCategory}>
+              <i className="fa fa-trash-o"></i>
+            </a>
+          </td>
+        </tr>
       );
     } else{
       return(
-        <div className="row dic_edit_form_row">
-          <form onSubmit={this.updateCategory}>
-            <div className="col-sm-2">
-              <input type="submit" value="Save" className='btn btn-success' />
-              <button className='btn btn-sm btn-primary' onClick={this.cancelEdit}>
-                Cancel
-              </button>
-            </div>
-            <div className="col-sm-2">
-              {this.renderCategoryNameEditFields()}
-            </div>
-            <div className="col-sm-4">
-              {this.renderCategoryDescriptionEditFields()}
-            </div>
-          </form>
-        </div>
+        <tr className="dic_edit_form_row">
+          <td>{this.props.index + 1}</td>
+          <td>
+            {this.renderCategoryNameEditFields()}
+          </td>
+          <td>
+            {this.renderCategoryDescriptionEditFields()}
+          </td>
+          <td className="col-sm-2">
+            <button className='btn btn-success' onClick={this.updateCategory}>Submit</button>
+            <button className='btn btn-sm btn-primary' onClick={this.cancelEdit}>
+              Cancel
+            </button>
+          </td>
+        </tr>
       );
     }
   }

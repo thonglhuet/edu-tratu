@@ -2,8 +2,19 @@ var DictionariesContainer = React.createClass({
   getInitialState: function(){
     return {
       dictionaries: this.props.dictionaries,
-      categories: this.props.categories
+      categories: this.props.categories,
+      showModal: false
     }
+  },
+  handleHideModal(){
+    this.setState({
+      showModal: false
+    })
+  },
+  handleShowModal(){
+    this.setState({
+      showModal: true
+    })
   },
   parentDictionarySubmit: function(url, formData, onSuccess, onError){
     $.ajax({
@@ -38,31 +49,49 @@ var DictionariesContainer = React.createClass({
     });
   },
   parentDeleteDictionary: function(formData){
-    $.ajax({
-      url: ('/dictionaries/' + formData['id']),
-      dataType: 'json',
-      type: 'DELETE',
-      data: {},
-      success: function(dictionaries) {
-        this.setState({dictionaries: dictionaries, showNewForm: false});
-      }.bind(this),
-      error: function(response, status, err) {
-        alert('Cannot delete dictionary');
-      }
-    });
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this dictionary?",
+      type: "warning",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "#ec6c62"
+    },function () {
+      $.ajax({
+        url: ('/dictionaries/' + formData['id']),
+        dataType: 'json',
+        type: 'DELETE',
+        data: {},
+        success: function(dictionaries) {
+          this.setState({dictionaries: dictionaries, showNewForm: false});
+          swal("Deleted!", "Your dictionary was successfully deleted!", "success");
+        }.bind(this),
+        error: function(response, status, err) {
+          swal("Oops", "We couldn't delete this dictionary!", "error");
+        }
+      });
+    }.bind(this));
   },
   render: function() {
     return(
       <div>
         <h1> Dictionary List </h1>
+        <div className='row dictionaries-action'>
+          <div className='col-md-2 pull-right'>
+            <a href="#" className='btn btn-primary pull-right' onClick={this.handleShowModal}>Add dictionary</a>
+          </div>
+        </div>
         <DictionaryTable
           dictionaries={this.state.dictionaries}
           categories={this.state.categories}
           parentUpdateDictionary={this.parentUpdateDictionary}
           parentDeleteDictionary={this.parentDeleteDictionary} />
-        <NewDictionaryForm
+        {this.state.showModal ? <NewDictionaryForm
           parentDictionarySubmit={this.parentDictionarySubmit}
-          categories={this.state.categories} />
+          categories={this.state.categories}
+          user_id={this.props.user_id}
+          handleHideModal={this.handleHideModal}/> : null}
       </div>
     );
   }

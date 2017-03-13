@@ -4,7 +4,8 @@ var DictionaryRow = React.createClass({
       category_name: this.props.category_name, name: this.props.name,
       description: this.props.description, edit: false, formErrors: {}} )
   },
-  editDictionary: function(){
+  editDictionary: function(e){
+    e.preventDefault();
     this.setState({edit: true});
   },
   cancelEdit: function(e){
@@ -37,9 +38,7 @@ var DictionaryRow = React.createClass({
   },
   deleteDictionary: function(e) {
     e.preventDefault();
-    if (confirm('Delete dictionary?')) {
-      this.props.parentDeleteDictionary({id: this.state.id});
-    }
+    this.props.parentDeleteDictionary({id: this.state.id});
   },
   renderFieldErrors: function(attribute, isDictionary){
     if (isDictionary) {
@@ -122,49 +121,47 @@ var DictionaryRow = React.createClass({
   render: function() {
     if(this.state.edit == false){
       return(
-        <div className="row dic_row">
-          <div className="col-sm-1">
-            <button className='btn btn-sm btn-primary' onClick={this.editDictionary}>
-              Edit
-            </button>
-          </div>
-          <div className="col-sm-1">
-            <button className='btn btn-sm btn-danger' onClick={this.deleteDictionary}>
-              Delete
-            </button>
-          </div>
-          <div className="col-sm-2">
+        <tr className="dic_row">
+          <td>{this.props.index + 1}</td>
+          <td>
             {this.props.category_name}
-          </div>
-          <div className="col-sm-2">
+          </td>
+          <td>
             {this.props.name}
-          </div>
-          <div className="col-sm-4">
+          </td>
+          <td className="col-sm-4">
             {this.props.description}
-          </div>
-        </div>
+          </td>
+          <td>
+            <a href="#" className='btn btn-info btn-round' onClick={this.editDictionary}>
+              <i className="fa fa-pencil"></i>
+            </a>
+            <a href="#" className='btn btn-danger btn-round' onClick={this.deleteDictionary}>
+              <i className="fa fa-trash-o"></i>
+            </a>
+          </td>
+        </tr>
       );
     } else{
       return(
-        <div className="row dic_edit_form_row">
-          <form onSubmit={this.updateDictionary}>
-            <div className="col-sm-2">
-              <input type="submit" value="Save" className='btn btn-success' />
-              <button className='btn btn-sm btn-primary' onClick={this.cancelEdit}>
-                Cancel
-              </button>
-            </div>
-            <div className="col-sm-2">
-              {this.renderDictionaryCategoryEditFields()}
-            </div>
-            <div className="col-sm-2">
-              {this.renderDictionaryNameEditFields()}
-            </div>
-            <div className="col-sm-4">
-              {this.renderDictionaryDescriptionEditFields()}
-            </div>
-          </form>
-        </div>
+        <tr className="dic_edit_form_row">
+          <td>{this.props.index + 1}</td>
+          <td>
+            {this.renderDictionaryCategoryEditFields()}
+          </td>
+          <td>
+            {this.renderDictionaryNameEditFields()}
+          </td>
+          <td>
+            {this.renderDictionaryDescriptionEditFields()}
+          </td>
+          <td className="col-sm-2">
+            <button className='btn btn-success' onClick={this.updateDictionary}>Submit</button>
+            <button className='btn btn-sm btn-primary' onClick={this.cancelEdit}>
+              Cancel
+            </button>
+          </td>
+        </tr>
       );
     }
   }

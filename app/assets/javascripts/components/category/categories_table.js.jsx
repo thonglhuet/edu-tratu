@@ -1,13 +1,14 @@
 var CategoryTable = React.createClass({
   renderCategoryRows: function(){
     return (
-      this.props.categories.map(function(category){
+      this.props.categories.map(function(category, index){
         return(
           <CategoryRow
             key={category.id}
             id={category.id}
             name={category.name}
             description={category.description}
+            index={index}
             parentUpdateCategory={this.props.parentUpdateCategory}
             parentDeleteCategory={this.props.parentDeleteCategory} />
         );
@@ -16,18 +17,22 @@ var CategoryTable = React.createClass({
   },
   render: function() {
     return(
-      <div>
-        <div className="row dic_head">
-          <div className="col-sm-2">
-          </div>
-          <div className="col-sm-2 dic_head_text">
-            Name
-          </div>
-          <div className="col-sm-4 dic_head_text">
-            Description
-          </div>
+      <div className='row'>
+        <div className='table-responsive'>
+          <table  className='table table-hover table-bordered'>
+            <thead className="dic_head">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderCategoryRows()}
+            </tbody>
+          </table>
         </div>
-        {this.renderCategoryRows()}
       </div>
     );
   }
