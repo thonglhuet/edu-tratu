@@ -1,18 +1,14 @@
-var DictionaryRow = React.createClass({
+var CategoryRow = React.createClass({
   getInitialState: function(){
-    return ( {id: this.props.id, category_id: this.props.category_id,
-      category_name: this.props.category_name, name: this.props.name,
+    return ( {id: this.props.id, name: this.props.name,
       description: this.props.description, edit: false, formErrors: {}} )
   },
-  editDictionary: function(){
+  editCategory: function(){
     this.setState({edit: true});
   },
   cancelEdit: function(e){
     e.preventDefault();
     this.setState({edit: false, name: this.props.name, description: this.props.description, formErrors: {}});
-  },
-  handleCategoryChange: function(e) {
-    this.setState({category_id: e.target.value});
   },
   handleNameChange: function(e){
     this.setState({name: e.target.value});
@@ -26,38 +22,23 @@ var DictionaryRow = React.createClass({
   handleUpdate: function(){
     this.setState({edit: false, formErrors: false});
   },
-  updateDictionary: function(e){
+  updateCategory: function(e){
     e.preventDefault();
-    this.props.parentUpdateDictionary(
-      {dictionary: {id: this.state.id, category_id: this.state.category_id,
-        name: this.state.name, description: this.state.description}},
+    this.props.parentUpdateCategory(
+      {category: {id: this.state.id, name: this.state.name,
+        description: this.state.description}},
       this.handleUpdate,
       this.handleValidationErrors
     );
   },
-  deleteDictionary: function(e) {
+  deleteCategory: function(e) {
     e.preventDefault();
-    if (confirm('Delete dictionary?')) {
-      this.props.parentDeleteDictionary({id: this.state.id});
+    if (confirm('Delete category?')) {
+      this.props.parentDeleteCategory({id: this.state.id});
     }
   },
-  renderFieldErrors: function(attribute, isDictionary){
-    if (isDictionary) {
-      //console.log(this.state.formErrors["dictionaries." + attribute]);
-      if(this.state.formErrors["dictionaries." + attribute]) {
-        return(
-          this.state.formErrors["dictionaries." + attribute].map(function(error, i){
-            return(
-              <span key={i} className="help-block">
-                {error}
-              </span>
-            );
-          })
-        );
-      } else {
-        return "";
-      }
-    } else if(this.state.formErrors[attribute]){
+  renderFieldErrors: function(attribute){
+    if(this.state.formErrors[attribute]){
       return(
         this.state.formErrors[attribute].map(function(error, i){
           return(
@@ -78,44 +59,34 @@ var DictionaryRow = React.createClass({
       return <option value={category.id}>{category.name}</option>;
     }
   },
-  renderDictionaryCategoryEditFields: function(){
-    return(
-      <div className= {"form-group"}>
-        <select className="form-control" name="dictionary[category_id]"
-          onChange={this.handleCategoryChange}>
-            {this.props.categories.map(this.makeCategorySelection)}
-        </select>
-      </div>
-    );
-  },
-  renderDictionaryNameEditFields: function(){
+  renderCategoryNameEditFields: function(){
     var formGroupClass = this.state.formErrors["name"] ? "form-group has-error" : "form-group"
     return(
       <div className= {formGroupClass}>
         <input
-          name="dictionary[name]"
+          name="category[name]"
           type="string"
-          placeholder="Dictionary Name"
+          placeholder="Category Name"
           value={this.state.name}
           onChange={this.handleNameChange}
           className="string form-control"
         />
-        {this.renderFieldErrors("name", true)}
+        {this.renderFieldErrors("name")}
       </div>
     );
   },
-  renderDictionaryDescriptionEditFields: function(){
+  renderCategoryDescriptionEditFields: function(){
     var formGroupClass = this.state.formErrors["description"] ? "form-group has-error" : "form-group"
     return(
       <div className= {formGroupClass}>
         <textarea
-          name="dictionary[description]"
-          placeholder="Dictionary Description"
+          name="category[description]"
+          placeholder="Category Description"
           value={this.state.description}
           onChange={this.handleDescriptionChange}
           className="text form-control"
         />
-        {this.renderFieldErrors("description", true)}
+        {this.renderFieldErrors("description")}
       </div>
     );
   },
@@ -124,17 +95,14 @@ var DictionaryRow = React.createClass({
       return(
         <div className="row dic_row">
           <div className="col-sm-1">
-            <button className='btn btn-sm btn-primary' onClick={this.editDictionary}>
+            <button className='btn btn-sm btn-primary' onClick={this.editCategory}>
               Edit
             </button>
           </div>
           <div className="col-sm-1">
-            <button className='btn btn-sm btn-danger' onClick={this.deleteDictionary}>
+            <button className='btn btn-sm btn-danger' onClick={this.deleteCategory}>
               Delete
             </button>
-          </div>
-          <div className="col-sm-2">
-            {this.props.category_name}
           </div>
           <div className="col-sm-2">
             {this.props.name}
@@ -147,7 +115,7 @@ var DictionaryRow = React.createClass({
     } else{
       return(
         <div className="row dic_edit_form_row">
-          <form onSubmit={this.updateDictionary}>
+          <form onSubmit={this.updateCategory}>
             <div className="col-sm-2">
               <input type="submit" value="Save" className='btn btn-success' />
               <button className='btn btn-sm btn-primary' onClick={this.cancelEdit}>
@@ -155,13 +123,10 @@ var DictionaryRow = React.createClass({
               </button>
             </div>
             <div className="col-sm-2">
-              {this.renderDictionaryCategoryEditFields()}
-            </div>
-            <div className="col-sm-2">
-              {this.renderDictionaryNameEditFields()}
+              {this.renderCategoryNameEditFields()}
             </div>
             <div className="col-sm-4">
-              {this.renderDictionaryDescriptionEditFields()}
+              {this.renderCategoryDescriptionEditFields()}
             </div>
           </form>
         </div>

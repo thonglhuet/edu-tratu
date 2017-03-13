@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :dictionaries
   resources :searchs, only: [:index, :show]
   resources :auth, only: :index
+  resources :categories
 end
