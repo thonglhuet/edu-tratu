@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root "static_pages#home"
   resources :dictionaries
   resources :searchs, only: [:index, :show]
+  resources :auth, only: :index
 end

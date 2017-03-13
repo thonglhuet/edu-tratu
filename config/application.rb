@@ -23,6 +23,9 @@ module #{(`echo $REPO_URL`.gsub("\n", "").presence || Dir.pwd).split("/").last.g
     config.assets.paths << Rails.root.join("vendor", "assets", "bower_components",
       "bootstrap-sass", "assets", "fonts")
     config.assets.precompile << %r(.*.(?:eot|svg|ttf|woff|woff2)$)
+    config.to_prepare do
+      DeviseController.respond_to :html, :json
+    end
 
     Dir.glob("config/routes/*").each do |route|
       config.paths["config/routes.rb"] << Rails.root.join(route)
