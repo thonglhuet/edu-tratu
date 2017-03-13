@@ -11,21 +11,41 @@ var NewWordForm = React.createClass({
       formErrors: {}
     };
   },
+  componentDidMount(){
+     $(ReactDOM.findDOMNode(this)).modal('show');
+     $(ReactDOM.findDOMNode(this)).on('hidden.bs.modal', this.props.handleHideModal);
+  },
   resetState: function() {
-    this.setState({dictionary_id: this.props.dictionaries.length > 0 ? this.props.dictionaries[0].id : null,
-      content: "", meaning: "", formErrors: {}});
+    this.setState({
+      dictionary_id: this.props.dictionaries.length > 0 ? this.props.dictionaries[0].id : null,
+      content: "",
+      meaning: "",
+      formErrors: {}
+    });
   },
   onFileSuccess: function() {
     this.resetState();
-    this.setState({added_from_file: true, added: false, added_from_file_failed: false});
+    this.setState({
+      added_from_file: true,
+      added: false,
+      added_from_file_failed: false
+    });
   },
   onFileError: function() {
     this.resetState();
-    this.setState({added_from_file: false, added: false, added_from_file_failed: true});
+    this.setState({
+      added_from_file: false,
+      added: false,
+      added_from_file_failed: true
+    });
   },
   onSuccess: function(){
     this.resetState();
-    this.setState({added_from_file: false, added: true, added_from_file_failed: false});
+    this.setState({
+      added_from_file: false,
+      added: true,
+      added_from_file_failed: false}
+    );
   },
   handleValidationError: function(formErrorObj){
     this.setState({formErrors: formErrorObj});
@@ -36,8 +56,11 @@ var NewWordForm = React.createClass({
       console.log("dlsajfsafd");
       this.refs.file_input.beginUpload()
     } else {
-      var formData = {word: {dictionary_id: this.state.dictionary_id, content: this.state.content,
-        meaning: this.state.meaning}};
+      var formData = {word: {
+        dictionary_id: this.state.dictionary_id,
+        content: this.state.content,
+        meaning: this.state.meaning
+      }};
       this.props.parentWordSubmit(
         formData,
         this.onSuccess,
@@ -80,7 +103,7 @@ var NewWordForm = React.createClass({
     if (this.state.added) {
       return (
         <div className='row'>
-          <div className='col-sm-4 alert alert-success'>
+          <div className='col-sm-12 alert alert-success'>
             <strong>Create new word successfully!</strong>
           </div>
         </div>
@@ -93,7 +116,7 @@ var NewWordForm = React.createClass({
     if (this.state.added_from_file) {
       return (
         <div className='row'>
-          <div className='col-sm-4 alert alert-success'>
+          <div className='col-sm-12 alert alert-success'>
             <strong>Create words from file successfully!</strong>
           </div>
         </div>
@@ -106,7 +129,7 @@ var NewWordForm = React.createClass({
     if (this.state.added_from_file_failed) {
       return (
         <div className='row'>
-          <div className='col-sm-4 alert alert-danger'>
+          <div className='col-sm-12 alert alert-danger'>
             <strong>Creating words from file failed!</strong>
           </div>
         </div>
@@ -117,34 +140,26 @@ var NewWordForm = React.createClass({
   },
   renderDictionaryCategoryFields: function(){
     return (
-      <div className='row'>
-        <div className='col-sm-4'>
-          <select className="form-control" name="word[dictionary_id]"
-            onChange={this.handleDictionaryChange}>
-              {this.props.dictionaries.map(this.makeDictionarySelection)}
-          </select>
-        </div>
-      </div>
+      <select className="form-control form-group" name="word[dictionary_id]"
+        onChange={this.handleDictionaryChange}>
+          {this.props.dictionaries.map(this.makeDictionarySelection)}
+      </select>
     );
   },
   renderWordContentField: function(){
     var formGroupClass = this.state.formErrors["content"] ?
       "form-group has-error" : "form-group";
     return (
-      <div className='row'>
-        <div className='col-sm-4'>
-          <div className= {formGroupClass}>
-            <input
-              name="word[content]"
-              type="string"
-              placeholder="Word Content"
-              value={this.state.content}
-              onChange={this.handleContentChange}
-              className="string form-control"
-            />
-            {this.renderFieldErrors("content", true)}
-          </div>
-        </div>
+      <div className= {formGroupClass}>
+        <input
+          name="word[content]"
+          type="string"
+          placeholder="Word Content"
+          value={this.state.content}
+          onChange={this.handleContentChange}
+          className="form-control"
+        />
+        {this.renderFieldErrors("content", true)}
       </div>
     );
   },
@@ -152,50 +167,57 @@ var NewWordForm = React.createClass({
     var formGroupClass = this.state.formErrors["meaning"] ?
       "form-group has-error" : "form-group";
     return(
-      <div className='row'>
-        <div className='col-sm-4'>
-          <div className={formGroupClass}>
-            <textarea
-              name="word[meaning]"
-              placeholder="Word Meaning"
-              value={this.state.meaning}
-              onChange={this.handleMeaningChange}
-              className="text form-control"
-            />
-            {this.renderFieldErrors("meaning", true)}
-          </div>
-        </div>
+      <div className={formGroupClass}>
+        <textarea
+          name="word[meaning]"
+          placeholder="Word Meaning"
+          value={this.state.meaning}
+          onChange={this.handleMeaningChange}
+          className="text form-control"
+        />
+        {this.renderFieldErrors("meaning", true)}
       </div>
     );
   },
   render: function(){
     return(
-      <div>
-        <h4 className='form_header'> Create New Word </h4>
-        <form className= 'form_body' onSubmit={this.newWordSubmit} encType="multipart/form-data">
-          <div className='form-inputs'/>
-            {this.renderDictionaryCategoryFields()}
-            {this.renderWordContentField()}
-            {this.renderWordMeaningField()}
-            <div className='row'>
-              <div className='col-sm-4'>
-                <FileUploadInput
-                  ref="file_input"
-                  dictionary_id={this.state.dictionary_id}
-                  onFileSuccess={this.onFileSuccess}
-                  onFileError={this.onFileError}
-                  url="/import"/>
+      <div className='modal fade'>
+          <div className='modal-dialog' role='document'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <button type='button' className='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                <h3>Add Word</h3>
               </div>
+              <div className='modal-body'>
+                <form className= 'form_body' onSubmit={this.newWordSubmit} encType="multipart/form-data">
+                  <div className='form-inputs'/>
+                    {this.renderDictionaryCategoryFields()}
+                    {this.renderWordContentField()}
+                    {this.renderWordMeaningField()}
+                    <div className='row'>
+                      <div className='col-sm-8'>
+                        <FileUploadInput
+                          ref="file_input"
+                          dictionary_id={this.state.dictionary_id}
+                          onFileSuccess={this.onFileSuccess}
+                          onFileError={this.onFileError}
+                          url="/import"/>
+                      </div>
+                    </div>
+                    <div className='row'>
+                      <div className='col-sm-4'>
+                        <input type="submit" value="Save" className='btn btn-primary' />
+                      </div>
+                    </div>
+                    {this.renderWordAddedSuccess()}
+                    {this.renderWordAddedFromFileSuccess()}
+                    {this.renderWordAddedFromFileFail()}
+                </form>
+                </div>
+            <div className='modal-footer'>
             </div>
-            <div className='row'>
-              <div className='col-sm-4'>
-                <input type="submit" value="Save" className='btn btn-primary' />
-              </div>
-            </div>
-            {this.renderWordAddedSuccess()}
-            {this.renderWordAddedFromFileSuccess()}
-            {this.renderWordAddedFromFileFail()}
-        </form>
+          </div>
+        </div>
       </div>
     );
   }

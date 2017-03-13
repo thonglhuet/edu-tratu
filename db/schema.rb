@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170309011021) do
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "description"
+    t.string   "slug"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170309011021) do
     t.integer  "status"
     t.string   "description"
     t.string   "image"
+    t.string   "slug"
     t.integer  "category_id"
     t.integer  "user_id"
     t.datetime "created_at",  null: false
@@ -124,6 +126,7 @@ ActiveRecord::Schema.define(version: 20170309011021) do
   create_table "words", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "content"
     t.string   "meaning"
+    t.string   "slug"
     t.integer  "dictionary_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false

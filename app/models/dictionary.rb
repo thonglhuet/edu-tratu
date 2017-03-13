@@ -1,4 +1,6 @@
 class Dictionary < ApplicationRecord
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
   belongs_to :category
   belongs_to :user
   has_many :shared_dictionaries
@@ -14,4 +16,11 @@ class Dictionary < ApplicationRecord
   scope :order_by, ->by{order("#{by}")}
   ATTR_PARAMS = [:name, :description, :category_id].freeze
   ATTR_PARAMS_NESTED = [:name, :description, :user_id].freeze
+
+  def slug_candidates
+    [
+      :name,
+      [:name, :id]
+    ]
+  end
 end

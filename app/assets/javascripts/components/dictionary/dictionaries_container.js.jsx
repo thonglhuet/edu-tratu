@@ -6,12 +6,12 @@ var DictionariesContainer = React.createClass({
       showModal: false
     }
   },
-  handleHideModal(){
+  handleHideModal: function(){
     this.setState({
       showModal: false
     })
   },
-  handleShowModal(){
+  handleShowModal: function(){
     this.setState({
       showModal: true
     })

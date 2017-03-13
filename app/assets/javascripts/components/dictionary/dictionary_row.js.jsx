@@ -40,23 +40,8 @@ var DictionaryRow = React.createClass({
     e.preventDefault();
     this.props.parentDeleteDictionary({id: this.state.id});
   },
-  renderFieldErrors: function(attribute, isDictionary){
-    if (isDictionary) {
-      //console.log(this.state.formErrors["dictionaries." + attribute]);
-      if(this.state.formErrors["dictionaries." + attribute]) {
-        return(
-          this.state.formErrors["dictionaries." + attribute].map(function(error, i){
-            return(
-              <span key={i} className="help-block">
-                {error}
-              </span>
-            );
-          })
-        );
-      } else {
-        return "";
-      }
-    } else if(this.state.formErrors[attribute]){
+  renderFieldErrors: function(attribute){
+    if(this.state.formErrors[attribute]){
       return(
         this.state.formErrors[attribute].map(function(error, i){
           return(
@@ -99,7 +84,7 @@ var DictionaryRow = React.createClass({
           onChange={this.handleNameChange}
           className="string form-control"
         />
-        {this.renderFieldErrors("name", true)}
+        {this.renderFieldErrors("name")}
       </div>
     );
   },
@@ -114,7 +99,7 @@ var DictionaryRow = React.createClass({
           onChange={this.handleDescriptionChange}
           className="text form-control"
         />
-        {this.renderFieldErrors("description", true)}
+        {this.renderFieldErrors("description")}
       </div>
     );
   },
