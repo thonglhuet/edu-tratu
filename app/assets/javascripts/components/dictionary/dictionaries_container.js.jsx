@@ -5,9 +5,9 @@ var DictionariesContainer = React.createClass({
       categories: this.props.categories
     }
   },
-  parentDictionarySubmit: function(formData, onSuccess, onError){
+  parentDictionarySubmit: function(url, formData, onSuccess, onError){
     $.ajax({
-      url: '/dictionaries',
+      url: url,
       dataType: 'json',
       type: 'POST',
       data: formData,
@@ -16,7 +16,8 @@ var DictionariesContainer = React.createClass({
         onSuccess();
       }.bind(this),
       error: function(response, status, err) {
-        onError(response.responseJSON)
+        console.log(response.responseJSON);
+        onError(response.responseJSON);
       }
     });
   },

@@ -1,5 +1,5 @@
 class DictionariesController < ApplicationController
-  before_action :logged_in_user
+  before_action :authenticate_user!
   before_action :load_dictionary, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -24,7 +24,7 @@ class DictionariesController < ApplicationController
     @dictionary = Dictionary.new dictionary_params
     @dictionary.user_id = current_user.id
     if @dictionary.save
-      render json: Dictionary.belongs_user(current_user.id).order_by("name")
+      render json: current_user.dictionaries.order_by("name")
     else
       render json: @dictionary.errors, status: :unprocessable_entity
     end
@@ -32,7 +32,7 @@ class DictionariesController < ApplicationController
 
   def update
     if @dictionary.update dictionary_params
-      render json: Dictionary.belongs_user(current_user.id).order_by("name")
+      render json: current_user.dictionaries.order_by("name")
     else
       render json: @dictionary.errors, status: :unprocessable_entity
     end
@@ -40,7 +40,7 @@ class DictionariesController < ApplicationController
 
   def destroy
     if @dictionary.destroy
-      render json: Dictionary.belongs_user(current_user.id).order_by("name")
+      render json: current_user.dictionaries.order_by("name")
     else
       render json: @dictionary.errors, status: :unprocessable_entity
     end
