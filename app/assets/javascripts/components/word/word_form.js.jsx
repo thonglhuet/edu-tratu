@@ -1,13 +1,10 @@
 var NewWordForm = React.createClass({
   getInitialState: function(){
     return {
-      dictionary_id: this.props.dictionaries.length > 0 ? this.props.dictionaries[0].id : null,
+      dictionary_id: this.props.dictionary_id,
       content: '',
       meaning: '',
       added: false,
-      added_from_file: false,
-      added_from_file_failed: false,
-      file: {},
       formErrors: {}
     };
   },
@@ -17,34 +14,15 @@ var NewWordForm = React.createClass({
   },
   resetState: function() {
     this.setState({
-      dictionary_id: this.props.dictionaries.length > 0 ? this.props.dictionaries[0].id : null,
       content: "",
       meaning: "",
       formErrors: {}
     });
   },
-  onFileSuccess: function() {
-    this.resetState();
-    this.setState({
-      added_from_file: true,
-      added: false,
-      added_from_file_failed: false
-    });
-  },
-  onFileError: function() {
-    this.resetState();
-    this.setState({
-      added_from_file: false,
-      added: false,
-      added_from_file_failed: true
-    });
-  },
   onSuccess: function(){
     this.resetState();
     this.setState({
-      added_from_file: false,
-      added: true,
-      added_from_file_failed: false}
+      added: true}
     );
   },
   handleValidationError: function(formErrorObj){
@@ -52,21 +30,16 @@ var NewWordForm = React.createClass({
   },
   newWordSubmit: function(e){
     e.preventDefault();
-    if (this.refs.file_input.state.file) {
-      console.log("dlsajfsafd");
-      this.refs.file_input.beginUpload()
-    } else {
-      var formData = {word: {
-        dictionary_id: this.state.dictionary_id,
-        content: this.state.content,
-        meaning: this.state.meaning
-      }};
-      this.props.parentWordSubmit(
-        formData,
-        this.onSuccess,
-        this.handleValidationError
-      );
-    }
+    var formData = {word: {
+      dictionary_id: this.state.dictionary_id,
+      content: this.state.content,
+      meaning: this.state.meaning
+    }};
+    this.props.parentWordSubmit(
+      formData,
+      this.onSuccess,
+      this.handleValidationError
+    );
   },
   handleDictionaryChange: function(e){
     this.setState({dictionary_id: e.target.value});
@@ -93,11 +66,7 @@ var NewWordForm = React.createClass({
     }
   },
   makeDictionarySelection: function(dictionary){
-    if (this.state.dictionary_id == dictionary.id) {
-      return <option value={dictionary.id} selected>{dictionary.name}</option>;
-    } else {
-      return <option value={dictionary.id}>{dictionary.name}</option>;
-    }
+    return <option key={dictionary.id} value={dictionary.id}>{dictionary.name}</option>;
   },
   renderWordAddedSuccess: function(){
     if (this.state.added) {
@@ -112,45 +81,21 @@ var NewWordForm = React.createClass({
       return "";
     }
   },
-  renderWordAddedFromFileSuccess: function(){
-    if (this.state.added_from_file) {
-      return (
-        <div className='row'>
-          <div className='col-sm-12 alert alert-success'>
-            <strong>Create words from file successfully!</strong>
-          </div>
-        </div>
-      );
-    } else {
-      return "";
-    }
-  },
-  renderWordAddedFromFileFail: function(){
-    if (this.state.added_from_file_failed) {
-      return (
-        <div className='row'>
-          <div className='col-sm-12 alert alert-danger'>
-            <strong>Creating words from file failed!</strong>
-          </div>
-        </div>
-      );
-    } else {
-      return "";
-    }
-  },
   renderDictionaryCategoryFields: function(){
-    return (
+    return [
+      <label>Dictionary Name<span className='require'>*</span></label>,
       <select className="form-control form-group" name="word[dictionary_id]"
-        onChange={this.handleDictionaryChange}>
+        onChange={this.handleDictionaryChange} value={this.state.dictionary_id}>
           {this.props.dictionaries.map(this.makeDictionarySelection)}
       </select>
-    );
+    ];
   },
   renderWordContentField: function(){
     var formGroupClass = this.state.formErrors["content"] ?
       "form-group has-error" : "form-group";
     return (
       <div className= {formGroupClass}>
+        <label>Word Content<span className='require'>*</span></label>
         <input
           name="word[content]"
           type="string"
@@ -168,6 +113,7 @@ var NewWordForm = React.createClass({
       "form-group has-error" : "form-group";
     return(
       <div className={formGroupClass}>
+        <label>Word Meaning<span className='require'>*</span></label>
         <textarea
           name="word[meaning]"
           placeholder="Word Meaning"
@@ -195,23 +141,14 @@ var NewWordForm = React.createClass({
                     {this.renderWordContentField()}
                     {this.renderWordMeaningField()}
                     <div className='row'>
-                      <div className='col-sm-8'>
-                        <FileUploadInput
-                          ref="file_input"
-                          dictionary_id={this.state.dictionary_id}
-                          onFileSuccess={this.onFileSuccess}
-                          onFileError={this.onFileError}
-                          url="/import"/>
-                      </div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-sm-4'>
+                      <div className='col-sm-2'>
                         <input type="submit" value="Save" className='btn btn-primary' />
+                      </div>
+                      <div className='col-sm-2'>
+                        <button type='button' className='btn btn-danger' data-dismiss='modal'>Close</button>
                       </div>
                     </div>
                     {this.renderWordAddedSuccess()}
-                    {this.renderWordAddedFromFileSuccess()}
-                    {this.renderWordAddedFromFileFail()}
                 </form>
                 </div>
             <div className='modal-footer'>
