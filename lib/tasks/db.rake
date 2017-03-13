@@ -3,8 +3,8 @@ namespace :db do
   task remake_data: :environment do
        Rake::Task["db:migrate:reset"].invoke
        puts "Creating user Manager"
-       user = User.create! email: "admin@gmail.com", password: "123456",
-        password_confirmation: "123456", name: "Hoang Duc Trung", role: 0
+       user = User.create! email: "admin@gmail.com", password: "12345678",
+        password_confirmation: "12345678", name: "Hoang Duc Trung", role: 0
        puts "Creating categories"
        categories_hash = {
         "Accountancy": "This is Accountancy",
@@ -38,6 +38,15 @@ namespace :db do
               word.save!
            end
        end
+      puts "Create Organizations"
+      10.times do
+        name = Faker::Company.name
+        description = Faker::Lorem.paragraph
+        organization = Organization.create! name: name, description: description
+        organization_member = organization.organization_members.build user_id: user.id, role: 0,
+          status: 0
+        organization_member.save!
+      end
       puts "Success remake data"
   end
 
