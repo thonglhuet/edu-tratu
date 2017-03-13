@@ -1,0 +1,24 @@
+{
+  "name": "edu-tratu",
+  "homepage": "https://github.com/framgia/edu-tratu",
+  "authors": [
+    "Hoang Duc Trung <hoangtrungmta94@gmail.com>",
+    "Nguyen Van Dat B <nguyen.van.datb@framgia.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "boostrap-sass#^3.3.7",
+    "font-awesome": "font-awsome#^4.7.0",
+    "jquery-ujs": "https://github.com/rails/jquery-ujs.git#^1.2.2"
+  }
+}
