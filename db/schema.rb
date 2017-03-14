@@ -53,12 +53,12 @@ ActiveRecord::Schema.define(version: 20170309011021) do
   end
 
   create_table "organization_members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "role"
+    t.integer  "role",            default: 0
     t.integer  "status"
     t.integer  "user_id"
     t.integer  "organization_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.index ["organization_id"], name: "index_organization_members_on_organization_id", using: :btree
     t.index ["user_id"], name: "index_organization_members_on_user_id", using: :btree
   end
