@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   resources :searchs, only: [:index, :show]
   resources :auth, only: :index
   resources :categories
+  resources :organizations
 end

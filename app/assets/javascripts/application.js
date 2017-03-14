@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require bootstrap-sass/assets/javascripts/bootstrap-sprockets
+//= require sweetalert/dist/sweetalert.min.js
 //= require jquery-ujs
 //= require react
 //= require react_ujs

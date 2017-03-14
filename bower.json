@@ -19,6 +19,7 @@
   "dependencies": {
     "bootstrap-sass": "boostrap-sass#^3.3.7",
     "font-awesome": "font-awsome#^4.7.0",
-    "jquery-ujs": "https://github.com/rails/jquery-ujs.git#^1.2.2"
+    "jquery-ujs": "https://github.com/rails/jquery-ujs.git#^1.2.2",
+    "sweetalert": "^1.1.3"
   }
 }

@@ -74,7 +74,6 @@ var Header = React.createClass({
                  <span className='icon-bar'></span>
                  <span className='icon-bar'></span>
                   </button>
-                  <Img src={Img.assetPath('logo.png')} id="logo"/>
               </div>
               <div className='ollapse navbar-collapse' id='bs-example-navbar-collapse-1'>
                 <ul className='nav navbar-nav'>
