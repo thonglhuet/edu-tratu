@@ -6,6 +6,16 @@ class OrganizationsController < ApplicationController
   def index
   end
 
+  def create
+    @organization = Organization.new organization_params
+    if @organization.save
+      @organization.create_organization_owner current_user
+      render json: load_list_organizations
+    else
+      render json: @organization.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     if @organization.destroy
       render json: load_list_organizations
@@ -21,6 +31,10 @@ class OrganizationsController < ApplicationController
   end
 
   def load_list_organizations
-    @organizations = current_user.organization.select :id, :name, :created_at
+    @organizations = current_user.organizations.select :id, :name, :created_at
+  end
+
+  def organization_params
+    params.require(:organization).permit Organization::ATTR_PARAMS
   end
 end

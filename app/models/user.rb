@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_many :activities
   has_many :bookmarks
   has_many :categories
-  has_many :organization, through: :organization_members
+  has_many :organizations, through: :organization_members
 end
