@@ -97,4 +97,13 @@ en:
     admins:
       index:
         title: "Dashboard"
+    organizations:
+      index:
+        title: "All Organizations"
+        name: "Name"
+        created: "Create"
+        action: "Action"
+        not_found_organizations: "Not found Organization"
+        members: "members"
+        search: "Search"
 
