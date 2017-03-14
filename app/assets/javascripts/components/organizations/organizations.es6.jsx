@@ -3,12 +3,16 @@ class Organizations extends React.Component {
     super(props)
     this.state = {
       organizations: this.props.organizations,
-      showModal: false
+      showModal: false,
+      edit: false,
+      organization_id: ''
     }
     this._handleDelete = this._handleDelete.bind(this)
     this._handleAdd = this._handleAdd.bind(this)
     this._handleHideModal = this._handleHideModal.bind(this)
     this._handleShowModal = this._handleShowModal.bind(this)
+    this._handleUpdate = this._handleUpdate.bind(this)
+    this._handleUpdateSubmit = this._handleUpdateSubmit.bind(this)
   }
   _handleDelete(id){
     swal({
@@ -36,7 +40,9 @@ class Organizations extends React.Component {
   }
   _handleHideModal(){
     this.setState({
-      showModal: false
+      showModal: false,
+      edit: false,
+      organization_id: ''
     })
   }
   _handleShowModal(){
@@ -61,9 +67,38 @@ class Organizations extends React.Component {
       }
     })
   }
+  _handleUpdate(id){
+    this.setState({
+      organization_id: id,
+      showModal:true,
+      edit: true
+    })
+  }
+  _handleUpdateSubmit(formData,id,onSuccess,onError){
+    $.ajax({
+      method: 'PATCH',
+      url: '/organizations/'+id,
+      dataType: 'json',
+      data: formData,
+      success: function(data){
+       this.setState({
+        organizations: data,
+        organization_id: id,
+        edit: true
+       })
+       onSuccess()
+      }.bind(this),
+      error: function(response, status, err){
+        onError(response.responseJSON)
+      }
+    })
+  }
   render(){
     let organizationNote =this.state.organizations.map((organization,index) =>
-      <Organization data={organization} key={index} index={index + 1}  handleDelete={this._handleDelete} />
+      <Organization data={organization} key={index} index={index + 1}
+        handleDelete={this._handleDelete}
+        handleUpdate={this._handleUpdate}
+      />
     )
     return(
       <div className='organizations-container'>
@@ -91,10 +126,13 @@ class Organizations extends React.Component {
               </tbody>
             </table>
             {
-          this.state.showModal ? <AddOrganization
-          _handleAdd={this._handleAdd}
-          _handleHideModal={this._handleHideModal} /> : null
-        }
+              this.state.showModal ? <AddOrganization
+                _handleAdd={this._handleAdd}
+                _handleHideModal={this._handleHideModal}
+                organization_id ={this.state.organization_id}
+                edit = {this.state.edit}
+                _handleUpdateSubmit = {this._handleUpdateSubmit} /> : null
+            }
           </div>
         </div>
       </div>
