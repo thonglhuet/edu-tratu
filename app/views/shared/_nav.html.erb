@@ -1,0 +1,113 @@
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse"
+      data-target=".navbar-ex1-collapse">
+      <span class="sr-only"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <%= link_to t(".title"), admin_root_path, class: "navbar-brand" %>
+  </div>
+  <ul class="nav navbar-right top-nav">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-user"></i> <%= current_user.name %><b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li>
+          <a href="#"><i class="fa fa-fw fa-user"></i> <%= t ".profile" %></a>
+        </li>
+        <li>
+          <%= link_to "#", method: :delete do %>
+            <i class="fa fa-sign-out"></i> <%= t ".logout" %>
+          <% end %>
+        </li>
+      </ul>
+    </li>
+  <ul>
+  <div class="collapse navbar-collapse navbar-ex1-collapse">
+    <ul class="nav navbar-nav side-nav">
+      <li class="active">
+        <a href="<%= admin_root_url %>">
+          <i class="fa fa-fw fa-dashboard"></i> <%= t ".dashboard" %>
+        </a>
+      </li>
+      <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#demo">
+          <i class="fa fa-list-alt"></i> <%= t ".categories" %>
+          <i class="fa fa-fw fa-caret-down"></i>
+        </a>
+        <ul id="demo" class="collapse">
+          <li>
+            <%= link_to t(".all_categories"), "#" %>
+          </li>
+          <li>
+            <%= link_to t(".new_categories"), "#" %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#dictionary">
+          <i class="fa fa-list-alt"></i> <%= t ".dictionaries" %>
+          <i class="fa fa-fw fa-caret-down"></i>
+        </a>
+        <ul id="demo" class="collapse">
+          <li>
+            <%= link_to t(".all_dictionaries"), "#" %>
+          </li>
+          <li>
+            <%= link_to t(".new_dictionaries"), "#" %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#organization">
+          <i class="fa fa-list-alt"></i> <%= t ".organization" %>
+          <i class="fa fa-fw fa-caret-down"></i>
+        </a>
+        <ul id="demo" class="collapse">
+          <li>
+            <%= link_to t(".all_organizations"), "#" %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#words">
+          <i class="fa fa-file-word-o"></i> <%= t ".words" %>
+          <i class="fa fa-fw fa-caret-down"></i>
+        </a>
+        <ul id="words" class="collapse">
+          <li>
+            <%= link_to t(".all_words"), "#" %>
+          </li>
+          <li>
+            <%= link_to t(".new_words"), "#" %>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="javascript:;" data-toggle="collapse" data-target="#users">
+          <i class="fa fa-users"></i> <%= t ".users" %>
+          <i class="fa fa-fw fa-caret-down"></i>
+        </a>
+        <ul id="users" class="collapse">
+          <li>
+            <%= link_to t(".all_users"), "#" %>
+          </li>
+          <li>
+            <%= link_to t(".new_user"), "#" %>
+          </li>
+          <li>
+            <%= link_to t(".show_user"), "#" %>
+          </li>
+        </ul>
+      </li>
+      <li class="active">
+        <%= link_to root_path do %>
+          <i class="fa fa-undo"></i> <%= t ".back_website" %>
+        <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

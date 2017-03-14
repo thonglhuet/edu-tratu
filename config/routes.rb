@@ -8,4 +8,7 @@ Rails.application.routes.draw do
   resources :categories
   resources :organizations
   resources :words
+  namespace :admin do
+    root "admins#index", as: :root
+  end
 end
