@@ -1,4 +1,6 @@
 en:
+  title: "Framgia Edu-Tratu"
+  danger_not_admin: "You not admin"
   devise:
     sessions:
       new:
@@ -66,3 +68,33 @@ en:
         confirmation: "Didn't receive confirmation instructions?"
         instructions: "Didn't receive unlock instructions?"
         sign: "Sign in with"
+  layouts:
+    admin:
+      title: "Framgia Edu-Tratu"
+      profile: "Profile"
+      dashboard: "Dashboard"
+      categories: "Categories"
+      all_categories: "All Categories"
+      new_categories: "Add new"
+      words: "Words"
+      all_words: "All words"
+      new_words: "Add new"
+      users: "Users"
+      all_users: "All users"
+      new_user: "Add new"
+      show_user: "Profile"
+      dictionaries: "Dictionaries"
+      all_dictionaries: "All dictionaries"
+      new_dictionaries: "New Dictionaries"
+      organization: "Organizations"
+      all_organizations: "All Organizations"
+      hello: "Hello"
+      admin: "Admin"
+      logout: "log out"
+      back_website: "Back Website"
+      copyright: "Technology Supported & SEO Service by EduTeam@framgia.com"
+  admin:
+    admins:
+      index:
+        title: "Dashboard"
+

@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :bookmarks
   has_many :categories
   has_many :organizations, through: :organization_members
+
+  enum role: [:admin, :user]
 end
