@@ -8,6 +8,6 @@ class Organization < ApplicationRecord
   ATTR_PARAMS = [:name, :description].freeze
 
   def create_organization_owner user
-    OrganizationMember.create! user_id: user.id, organization_id: self.id
+    OrganizationMember.create! user_id: user.id, organization_id: id
   end
 end
