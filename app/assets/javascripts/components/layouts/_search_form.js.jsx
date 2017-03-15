@@ -76,8 +76,8 @@ var Search = React.createClass({
             <div className='box-register'>
               <h2>Framgia Dictionary</h2>
               <p>Create and share your own word lists and quizzes for free!</p>
-              <a className='btn box-btn-register'><b>Sign up now</b></a>
-              <a className='btn box-btn-login'><b>Login</b></a>
+              <a href='/users/sign_up' className='btn box-btn-register'><b>Sign up now</b></a>
+              <a href='/users/sign_in' className='btn box-btn-login'><b>Login</b></a>
             </div>
           </div>
         </div>

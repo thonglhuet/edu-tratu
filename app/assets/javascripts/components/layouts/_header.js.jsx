@@ -59,7 +59,17 @@ var Header = React.createClass({
         </li>
     )
     let user = (
-      <li><a href='#'><i>Welcome {this.state.user}</i></a></li>
+      <li className='welcome'>
+        <a href="#" className='dropdown-toggle' data-toggle='dropdown'
+          role='button' aria-haspopup='true' aria-expanded='false'>Welcome {this.state.user}
+            <span className='caret'></span>
+        </a>
+        <ul className='dropdown-menu'>
+          <li><a href="/organizations">Organizations</a></li>
+          <li><a href="/dictionaries">Dictionaries</a></li>
+          <li><a href='/words/new'>Word new</a></li>
+        </ul>
+      </li>
     )
 
     return(
@@ -75,9 +85,9 @@ var Header = React.createClass({
                  <span className='icon-bar'></span>
                   </button>
               </div>
-              <div className='ollapse navbar-collapse' id='bs-example-navbar-collapse-1'>
+              <div className='collapse navbar-collapse' id='bs-example-navbar-collapse-1'>
                 <ul className='nav navbar-nav'>
-                  <li><a href=''>Dictionary</a></li>
+                  <li><a href='/dictionaries'>Dictionary</a></li>
                   <li><a href=''>About</a></li>
                   <li><a href=''>Contact</a></li>
                 </ul>
