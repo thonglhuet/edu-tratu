@@ -7,4 +7,5 @@ class Word < ApplicationRecord
     joins(:dictionary).merge(Dictionary.find_by_category(category_id))
       .where "content LIKE ?", "%#{q}%" if q.present?
   }
+  ATTR_PARAMS = [:content, :meaning, :dictionary_id].freeze
 end

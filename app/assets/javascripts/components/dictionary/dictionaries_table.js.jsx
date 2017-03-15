@@ -1,7 +1,7 @@
 var DictionaryTable = React.createClass({
   renderDictionaryRows: function(){
     return (
-      this.props.dictionaries.map(function(dictionary){
+      this.props.dictionaries.map(function(dictionary, index){
         return(
           <DictionaryRow
             key={dictionary.id}
@@ -12,28 +12,31 @@ var DictionaryTable = React.createClass({
             name={dictionary.name}
             description={dictionary.description}
             parentUpdateDictionary={this.props.parentUpdateDictionary}
-            parentDeleteDictionary={this.props.parentDeleteDictionary} />
+            parentDeleteDictionary={this.props.parentDeleteDictionary}
+            index={index}/>
         );
       }.bind(this))
     );
   },
   render: function() {
     return(
-      <div>
-        <div className="row dic_head">
-          <div className="col-sm-2">
-          </div>
-          <div className="col-sm-2 dic_head_text">
-            Category
-          </div>
-          <div className="col-sm-2 dic_head_text">
-            Name
-          </div>
-          <div className="col-sm-4 dic_head_text">
-            Description
-          </div>
+      <div className='row'>
+        <div className='table-responsive'>
+          <table  className='table table-hover table-bordered'>
+            <thead className="dic_head">
+              <tr>
+                <th>#</th>
+                <th>Category</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.renderDictionaryRows()}
+            </tbody>
+          </table>
         </div>
-        {this.renderDictionaryRows()}
       </div>
     );
   }

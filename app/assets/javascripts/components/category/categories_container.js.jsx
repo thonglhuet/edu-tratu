@@ -2,7 +2,18 @@ var CategoriesContainer = React.createClass({
   getInitialState: function(){
     return {
       categories: this.props.categories,
+      showModal: false
     }
+  },
+  handleHideModal(){
+    this.setState({
+      showModal: false
+    })
+  },
+  handleShowModal(){
+    this.setState({
+      showModal: true
+    })
   },
   parentCategorySubmit: function(formData, onSuccess, onError){
     $.ajax({
@@ -35,30 +46,47 @@ var CategoriesContainer = React.createClass({
     });
   },
   parentDeleteCategory: function(formData){
-    $.ajax({
-      url: ('/categories/' + formData['id']),
-      dataType: 'json',
-      type: 'DELETE',
-      data: {},
-      success: function(categories) {
-        this.setState({categories: categories, showNewForm: false});
-      }.bind(this),
-      error: function(response, status, err) {
-        alert('Cannot delete category');
-      }
-    });
+    swal({
+      title: "Are you sure?",
+      text: "Are you sure that you want to delete this category?",
+      type: "warning",
+      showCancelButton: true,
+      closeOnConfirm: false,
+      confirmButtonText: "Yes, delete it!",
+      confirmButtonColor: "#ec6c62"
+    },function () {
+      $.ajax({
+        url: ('/categories/' + formData['id']),
+        dataType: 'json',
+        type: 'DELETE',
+        data: {},
+        success: function(categories) {
+          this.setState({categories: categories, showNewForm: false});
+          swal("Deleted!", "Your category was successfully deleted!", "success");
+        }.bind(this),
+        error: function(response, status, err) {
+          swal("Oops", "We couldn't delete this category!", "error");
+        }
+      });
+    }.bind(this));
   },
   render: function() {
     return(
       <div>
         <h1> Category List </h1>
+        <div className='row categories-action'>
+          <div className='col-md-2 pull-right'>
+            <a href="#" className='btn btn-primary pull-right' onClick={this.handleShowModal}>Add category</a>
+          </div>
+        </div>
         <CategoryTable
           categories={this.state.categories}
           parentUpdateCategory={this.parentUpdateCategory}
           parentDeleteCategory={this.parentDeleteCategory} />
-        <NewCategoryForm
+          {this.state.showModal ? <NewCategoryForm
           parentCategorySubmit={this.parentCategorySubmit}
-          categories={this.state.categories} />
+          categories={this.state.categories}
+          handleHideModal={this.handleHideModal}/> : null}
       </div>
     );
   }

@@ -16,6 +16,7 @@
 //= require jquery-ujs
 //= require react
 //= require react_ujs
+//= require human-format
 //=  require js-routes
 //= require components
 //= require react_rails_img
