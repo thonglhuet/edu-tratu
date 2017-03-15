@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   resources :words
   namespace :admin do
     root "admins#index", as: :root
+    resources :organizations, only: :index
   end
 end
