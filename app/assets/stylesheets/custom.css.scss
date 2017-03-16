@@ -36,6 +36,20 @@ header {
     color: $white-color;
 
     .navbar-nav {
+      .open {
+        a {
+
+          &:focus {
+            background-color: $mine-shaft-color;
+            color: $white-color;
+          }
+
+          &:hover {
+            background-color: $mine-shaft-color;
+            color: $white-color;
+          }
+        }
+      }
 
       li {
 
@@ -47,6 +61,11 @@ header {
           &:hover {
             color: $white-color;
           }
+        }
+
+        .dropdown-menu {
+          background-color: $mine-shaft-color;
+          color: $white-color;
         }
 
         .social {
@@ -290,4 +309,8 @@ footer {
   font-size: 85%;
   font-style: italic;
   font-weight: normal;
+}
+
+.dictionaries-action {
+  margin-bottom: 20px;
 }
