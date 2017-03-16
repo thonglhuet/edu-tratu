@@ -7,7 +7,9 @@ var Search = React.createClass({
       categories: $.map(categories, function (value,index) { return value; }),
       searchValue: '',
       words: [],
-      didFetchData: false
+      didFetchData: false,
+      showModal: false,
+      signedIn: this.props.signedIn
     }
   },
   handleChangeValue: function(e){
@@ -44,7 +46,29 @@ var Search = React.createClass({
   makeCategorySelection: function(category){
     return <option key={category.id} value={category.id}>{category.name}</option>
   },
+  handleHideModal: function(){
+    this.setState({
+      showModal: false
+    });
+  },
+  handleShowModal: function(){
+    this.setState({
+      showModal: true,
+    });
+  },
+  onClick: function(e){
+    e.preventDefault()
+    this.setState({
+      showModal: true,
+    });
+  },
   render: function(){
+    let signedInNote = (
+      <a onClick={this.onClick} className='btn box-btn-register'><b>Sign up now</b></a>
+    )
+    let dictionaryNote = (
+      <a href='/dictionaries' className='btn box-btn-register'><b>Create Dictionary</b></a>
+    )
     return(
       <div className='container'>
         <div className='row'>
@@ -75,8 +99,7 @@ var Search = React.createClass({
             <div className='box-register'>
               <h2>Framgia Dictionary</h2>
               <p>Create and share your own word lists and quizzes for free!</p>
-              <a href='/users/sign_up' className='btn box-btn-register'><b>Sign up now</b></a>
-              <a href='/users/sign_in' className='btn box-btn-login'><b>Login</b></a>
+              {this.props.signedIn ? dictionaryNote : signedInNote}
             </div>
           </div>
         </div>
@@ -87,6 +110,7 @@ var Search = React.createClass({
             }
           </div>
         </div>
+        {this.state.showModal ? <Register handleHideModal={this.handleHideModal} /> : null}
       </div>
     )
   }

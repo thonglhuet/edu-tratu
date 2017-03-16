@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.string :address
       t.string :image
       t.string :phone
-      t.integer :role
+      t.integer :role, default: 1
       t.string :reset_password_token
       t.datetime :reset_password_sent_at
       t.datetime :remember_created_at

@@ -110,7 +110,7 @@ var Header = React.createClass({
         </header>
         <div className='header-main'>
           <div className='search-container'>
-            <Search categories = {this.state.categories}/>
+            <Search categories = {this.state.categories} signedIn={this.state.signedIn}/>
           </div>
         </div>
         {this.state.showModal ? <Login handleHideModal={this.handleHideModal} /> : null}
