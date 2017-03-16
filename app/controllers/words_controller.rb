@@ -37,11 +37,11 @@ class WordsController < ApplicationController
   private
 
   def load_dictionary
-    @dictionary = Dictionary.friendly.find id: params[:dictionary_id]
+    @dictionary = Dictionary.friendly.find params[:dictionary_id]
   end
 
   def load_word
-    @word = Word.friendly.find id: params[:id]
+    @word = Word.friendly.find params[:id]
   end
 
   def word_params

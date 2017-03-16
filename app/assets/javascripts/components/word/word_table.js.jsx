@@ -1,19 +1,22 @@
 var WordTable = React.createClass({
   renderWordRows: function(){
-    return (
-      this.props.words.map(function(word, index){
-        return(
-          <WordRow
-            key={word.id}
-            id={word.id}
-            content={word.content}
-            meaning={word.meaning}
-            index={index}
-            parentUpdateWord={this.props.parentUpdateWord}
-            parentDeleteWord={this.props.parentDeleteWord} />
-        );
-      }.bind(this))
-    );
+    var rows = []
+    var index = 0;
+    this.props.words.forEach(function(word){
+      if (this.props.filterText == '' ||
+        LCS(word.content, this.props.filterText).length == this.props.filterText.length) {
+        index++;
+        rows.push(<WordRow
+          key={word.id}
+          id={word.id}
+          content={word.content}
+          meaning={word.meaning}
+          index={index}
+          parentUpdateWord={this.props.parentUpdateWord}
+          parentDeleteWord={this.props.parentDeleteWord} />);
+      }
+    }.bind(this));
+    return (rows);
   },
   render: function() {
     return(

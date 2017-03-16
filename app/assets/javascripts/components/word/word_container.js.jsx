@@ -4,6 +4,7 @@ var WordsContainer = React.createClass({
       dictionary_id: this.props.dictionary_id,
       words: this.props.words,
       dictionaries: this.props.dictionaries,
+      filterText: '',
       showModal: false
     }
   },
@@ -73,10 +74,23 @@ var WordsContainer = React.createClass({
       });
     }.bind(this));
   },
+  handleFilterTextInput(filterText) {
+    this.setState({
+      filterText: filterText
+    });
+  },
   render: function() {
     return(
       <div>
         <h1>Words</h1>
+        <div className='row categories-action'>
+          <div className='col-md-2 pull-left'>
+            <SearchBar
+              filterText={this.state.filterText}
+              onFilterTextInput={this.handleFilterTextInput}
+            />
+          </div>
+        </div>
         <div className='row categories-action'>
           <div className='col-md-2 pull-right'>
             <a href="#" className='btn btn-primary pull-right' onClick={this.handleShowModal}>Add word</a>
@@ -85,7 +99,8 @@ var WordsContainer = React.createClass({
         <WordTable
           words={this.state.words}
           parentUpdateWord={this.parentUpdateWord}
-          parentDeleteWord={this.parentDeleteWord} />
+          parentDeleteWord={this.parentDeleteWord}
+          filterText={this.state.filterText}/>
           {this.state.showModal ? <NewWordForm
           parentWordSubmit={this.parentWordSubmit}
           dictionaries={this.state.dictionaries}
