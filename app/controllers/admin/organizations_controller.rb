@@ -1,5 +1,6 @@
 class Admin::OrganizationsController < ApplicationController
   before_action :authenticate_user!, :verify_admin
+  before_action :load_organization, only: :destroy
   layout "admin"
 
   def index

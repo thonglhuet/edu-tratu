@@ -1,0 +1,18 @@
+en:
+  admin:
+    users:
+      index:
+        all_user: "All Users"
+        search: "Search"
+        not_found_user: "Not found User"
+      user:
+        you_sure: "You sure?"
+    deletes:
+      show:
+        delete_user: "Delete User %{id}"
+        if_you_delete: "If you delete this user the following content will be deleted"
+        organization: "Organization"
+        dictionaries: "Dictionaries"
+        you_sure: "you_sure ?"
+        delete: "Delete"
+        cancel: "Cancel"

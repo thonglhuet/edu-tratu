@@ -16,7 +16,7 @@ module #{(`echo $REPO_URL`.gsub("\n", "").presence || Dir.pwd).split("/").last.g
     config.time_zone = 'Asia/Tokyo'
     config.active_record.default_timezone = :local
     config.active_record.time_zone_aware_attributes = false
-    config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**/*.{rb,yml}').to_s]
     config.autoload_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join('services')
     Rails.root.join("vendor", "assets", "bower_components")

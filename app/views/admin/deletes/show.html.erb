@@ -1,0 +1,39 @@
+<% provide :title, t(".delete_user", id: @user.name) %>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <h3><%= t ".if_you_delete" %></h3>
+    <% if @organizations.any? %>
+      <h3><%= t ".organization" %></h3>
+      <ul>
+        <% @organizations.each do |organization| %>
+          <li>
+            <%= organization.name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if @user.dictionaries.any? %>
+      <h3><%= t ".dictionaries" %></h3>
+      <ul>
+        <% @user.dictionaries.each do |dictionary| %>
+          <li>
+            <%= dictionary.name %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+    <div class="row col-md-4">
+      <%= link_to admin_user_path(@user), method: :delete,
+        data: {confirm: t(".you_sure")} do %>
+        <button type="button" class="btn btn-danger">
+          <%= t ".Delete" %>
+        </button>
+      <% end %>
+      <%= link_to admin_users_path do %>
+        <button type="button" class="btn btn-default">
+          <%= t ".cancel" %>
+        </button>
+      <% end %>
+    </div>
+  </div>
+</div>

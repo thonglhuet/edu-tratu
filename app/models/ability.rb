@@ -6,6 +6,8 @@ class Ability
     case user.role
     when "admin"
       can :manage, :all
+      cannot :destroy, User, role: 0
+      cannot :delete, User, role: 0
     when "user"
       can :manage, [Category, Dictionary, Bookmark, Organization, Review,
         SharedDictionary]

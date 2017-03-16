@@ -3,9 +3,9 @@ class Dictionary < ApplicationRecord
   friendly_id :slug_candidates, use: :slugged
   belongs_to :category
   belongs_to :user
-  has_many :shared_dictionaries
+  has_many :shared_dictionaries, dependent: :destroy
   has_many :organizations, through: :shared_dictionaries
-  has_many :words
+  has_many :words, dependent: :destroy
 
   validates :name, presence: true, length: {minimum: 5}
   validates :description, presence: true, length: {minimum: 5}

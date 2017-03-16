@@ -2,8 +2,8 @@ class Word < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: :slugged
   belongs_to :dictionary
-  has_many :word_details
-  has_many :bookmarks
+  has_many :word_details, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
 
   validates :content, presence: true
   validates :meaning, presence: true

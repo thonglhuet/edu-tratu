@@ -1,0 +1,6 @@
+en:
+  admin:
+    users:
+      destroy:
+        delete_success: "Delete success"
+        delete_error: "Delete error"

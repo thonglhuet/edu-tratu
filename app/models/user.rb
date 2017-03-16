@@ -2,12 +2,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable, :omniauthable
   belongs_to :plan
-  has_many :organization_members
-  has_many :reviews
-  has_many :dictionaries
-  has_many :activities
-  has_many :bookmarks
-  has_many :categories
+  has_many :reviews, dependent: :destroy
+  has_many :dictionaries, dependent: :destroy
+  has_many :activities, dependent: :destroy
+  has_many :bookmarks, dependent: :destroy
+  has_many :categories, dependent: :destroy
+  has_many :organization_members, dependent: :destroy
   has_many :organizations, through: :organization_members
 
   enum role: [:admin, :user]

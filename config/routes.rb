@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   namespace :admin do
     root "admins#index", as: :root
     resources :organizations, only: :index
+    resources :users, only: [:index, :destroy] do
+      resource :delete, only: :show
+    end
   end
   namespace :api do
     get "/words", to: "words#index"
