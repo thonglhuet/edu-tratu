@@ -49,7 +49,7 @@ class DictionariesController < ApplicationController
   private
 
   def load_dictionary
-    @dictionary = Dictionary.find params[:id]
+    @dictionary = Dictionary.friendly.find params[:id]
     render_404 unless @dictionary
   end
 
