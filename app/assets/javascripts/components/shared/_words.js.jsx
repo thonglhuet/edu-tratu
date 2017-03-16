@@ -19,7 +19,6 @@ var Words = React.createClass({
        })
       }.bind(this),
       error: function(xhr, status, err){
-        console.error('/searchs', status, err.toString());
       }
     })
   },
