@@ -5,7 +5,8 @@ class Login extends React.Component {
     this._handleSignInClick = this._handleSignInClick.bind(this)
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      login_false: false
     }
   }
   componentDidMount(){
@@ -34,11 +35,16 @@ class Login extends React.Component {
        location.reload();
       }.bind(this),
       error: function(xhr, status, err){
-        console.error('/users/sign_in', status, err.toString());
-      }
+        this.setState({login_false: true})
+      }.bind(this)
     })
   }
   render(){
+    let _error_login = (
+      <div className='alert alert-warning'>
+        Login fail!
+      </div>
+    )
     return (
       <div className='modal fade'>
         <div className='modal-dialog' role='document'>
@@ -48,13 +54,14 @@ class Login extends React.Component {
               <h3>Login</h3>
             </div>
             <div className='modal-body'>
+              {this.state.login_false ? _error_login : null}
               <form>
                 <div className='form-group'>
                   <input name='email' type='email' placeholder='email' value={this.state.email}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
-                  <input name='password' type='password' placeholder='email' value={this.state.password}
+                  <input name='password' type='password' placeholder='password' value={this.state.password}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>

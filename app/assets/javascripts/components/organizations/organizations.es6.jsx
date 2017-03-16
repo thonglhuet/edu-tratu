@@ -100,6 +100,11 @@ class Organizations extends React.Component {
         handleUpdate={this._handleUpdate}
       />
     )
+    let notFoundNote = (
+      <div className='alert alert-warning'>
+         Organizations not found!
+      </div>
+    )
     return(
       <div className='organizations-container'>
         <div className='row'>
@@ -125,6 +130,7 @@ class Organizations extends React.Component {
                 {organizationNote}
               </tbody>
             </table>
+            {this.state.organizations.length > 0 ? null : notFoundNote}
             {
               this.state.showModal ? <AddOrganization
                 _handleAdd={this._handleAdd}

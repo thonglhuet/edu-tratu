@@ -20,7 +20,6 @@ var Search = React.createClass({
     this.setState({
       searchValue: e.target.value
     });
-    this.fetchDataDone(e.target.value)
   },
   fetchDataDone: function(search){
     $.ajax({
@@ -34,8 +33,8 @@ var Search = React.createClass({
       })
       }.bind(this),
       error: function(xhr, status, err){
-        console.error('/searchs', status, err.toString());
-      }
+        this.setState({didFetchData: true})
+      }.bind(this)
     })
   },
   handleOnSubmit: function(e){
@@ -83,7 +82,9 @@ var Search = React.createClass({
         </div>
         <div className='row'>
           <div className='col-md-8 col-xs-12 words-list'>
-            {this.state.didFetchData ? <Words words={this.state.words}/> : null}
+            {
+              this.state.didFetchData ? <Words words={this.state.words} /> : null
+            }
           </div>
         </div>
       </div>
