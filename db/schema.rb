@@ -43,13 +43,13 @@ ActiveRecord::Schema.define(version: 20170309011021) do
   create_table "dictionaries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "status"
-    t.string   "description"
+    t.text     "description", limit: 65535
     t.string   "image"
     t.string   "slug"
     t.integer  "category_id"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.index ["category_id"], name: "index_dictionaries_on_category_id", using: :btree
     t.index ["user_id"], name: "index_dictionaries_on_user_id", using: :btree
   end

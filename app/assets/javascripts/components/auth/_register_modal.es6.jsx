@@ -25,7 +25,7 @@ class Register extends React.Component {
     e.preventDefault()
     $.ajax({
       method: 'POST',
-      url: '/users',
+      url: '/users.json',
       data: {
         user: {
           email: this.state.email,
@@ -60,18 +60,22 @@ class Register extends React.Component {
                {this.state.register_false ? errorRegisterNote : null}
               <form>
                 <div className='form-group'>
+                  <label>Full name <span className='require'>*</span></label>
                   <input name='name' type='text' placeholder='name' value={this.state.name}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
+                  <label>Email <span className='require'>*</span></label>
                   <input name='email' type='email' placeholder='email' value={this.state.email}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
+                  <label>Password <span className='require'>*</span></label>
                   <input name='password' type='password' placeholder='password' value={this.state.password}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
+                  <label>Password confirmation <span className='require'>*</span></label>
                   <input name='password_confirmation' type='password' placeholder='password_confirmation'
                     value={this.state.password_confirmation}
                     onChange={this._handleInputChange}  className='form-control'/>
