@@ -57,16 +57,19 @@ class Login extends React.Component {
               {this.state.login_false ? _error_login : null}
               <form>
                 <div className='form-group'>
+                  <label>Email <span className='require'>*</span></label>
                   <input name='email' type='email' placeholder='email' value={this.state.email}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
+                  <label>Password <span className='require'>*</span></label>
                   <input name='password' type='password' placeholder='password' value={this.state.password}
                     onChange={this._handleInputChange}  className='form-control'/>
                 </div>
                 <div className='form-group'>
                   <input type='submit' onClick={this._handleSignInClick} defaultValue='login'
                     className='btn btn-primary' />
+                  <a href='/users/sign_up' className='login-btn-register'>or Sign up</a>
                 </div>
               </form>
             </div>

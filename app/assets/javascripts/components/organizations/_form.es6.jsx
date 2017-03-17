@@ -138,11 +138,13 @@ class AddOrganization extends React.Component{
               <form>
                 {this.state.organization_id ? inputHidden : null}
                 <div className={formGroupClass}>
+                  <label>Nam Organization <span className='require'>*</span></label>
                   <input name='name' type='text' placeholder='name' value={this.state.name}
                     onChange={this._handleInputChange}  className='form-control'/>
                   {this._fieldErrors("name")}
                 </div>
                 <div className='form-group'>
+                  <label>Description </label>
                   <textarea name='description' className="form-control" rows="5"
                     value={this.state.description} onChange={this._handleInputChange} >
                   </textarea>

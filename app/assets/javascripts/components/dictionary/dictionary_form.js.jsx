@@ -61,7 +61,7 @@ var NewDictionaryForm = React.createClass({
     this.setState({description: e.target.value});
   },
   renderFieldErrors: function(attribute, isDictionary){
-    this.setState({success: false});
+
     if (this.state.is_new_category && isDictionary) {
       if (this.state.formErrors["dictionaries." + attribute]) {
         return(
