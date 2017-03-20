@@ -96,8 +96,12 @@ var Header = React.createClass({
                   {this.state.signedIn ? logout : login}
                   <li>
                     <ul className='social'>
-                      <li><a href='#' className='icon-facebook'><i className='fa fa-facebook'></i></a></li>
-                      <li><a href="" className='icon-google'><i className='fa fa-google-plus'></i></a></li>
+                      <li><a href='/users/auth/facebook' className='icon-facebook'>
+                        <i className='fa fa-facebook'></i></a>
+                      </li>
+                      <li><a href="/users/auth/google_oauth2" className='icon-google'>
+                        <i className='fa fa-google-plus'></i></a>
+                      </li>
                       <li><a href="#" className='icon-twitter'><i className='fa fa-twitter'></i></a></li>
                       <li><a href="#" className='icon-instagram'><i className='fa fa-instagram'></i></a></li>
                       <li><a href="#" className='icon-youtube'><i className='fa fa-youtube'></i></a></li>

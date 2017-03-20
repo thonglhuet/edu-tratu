@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(version: 20170309011021) do
     t.string   "address"
     t.string   "image"
     t.string   "phone"
+    t.string   "uid"
+    t.string   "provider"
     t.integer  "role",                   default: 1
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
