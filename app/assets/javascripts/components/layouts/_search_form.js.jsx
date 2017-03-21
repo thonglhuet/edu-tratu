@@ -63,16 +63,10 @@ var Search = React.createClass({
     });
   },
   render: function(){
-    let signedInNote = (
-      <a onClick={this.onClick} className='btn box-btn-register'><b>Sign up now</b></a>
-    )
-    let dictionaryNote = (
-      <a href='/dictionaries' className='btn box-btn-register'><b>Create Dictionary</b></a>
-    )
     return(
       <div className='container'>
         <div className='row'>
-          <div className='col-md-8 col-xs-12 box-search'>
+          <div className='col-md-8 col-md-offset-2 col-xs-12 box-search'>
             <form onSubmit={this.handleOnSubmit}>
               <div className='input-group'>
                 <div className='input-group-btn search-panel' id='search-panel'>
@@ -95,16 +89,9 @@ var Search = React.createClass({
               </div>
             </form>
           </div>
-          <div className='col-md-4 col-xs-12'>
-            <div className='box-register'>
-              <h2>Framgia Dictionary</h2>
-              <p>Create and share your own word lists and quizzes for free!</p>
-              {this.props.signedIn ? dictionaryNote : signedInNote}
-            </div>
-          </div>
         </div>
         <div className='row'>
-          <div className='col-md-8 col-xs-12 words-list'>
+          <div className='col-md-8 col-md-offset-2 col-xs-12 words-list'>
             {
               this.state.didFetchData ? <Words words={this.state.words} /> : null
             }
