@@ -4,7 +4,8 @@ var Header = React.createClass({
       categories: this.props.categories,
       signedIn: null,
       showModal: false,
-      user: null
+      user: null,
+      is_root_page: this.props.current_page
     }
   },
   componentWillMount: function(){
@@ -115,7 +116,11 @@ var Header = React.createClass({
         </header>
         <div className='header-main'>
           <div className='search-container'>
-            <Search categories = {this.state.categories} signedIn={this.state.signedIn}/>
+            {
+              this.state.is_root_page ?
+              <Search categories = {this.state.categories} signedIn={this.state.signedIn}/>
+              :null
+            }
           </div>
         </div>
         {this.state.showModal ? <Login handleHideModal={this.handleHideModal} /> : null}

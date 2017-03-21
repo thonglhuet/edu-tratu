@@ -12,4 +12,8 @@ module ApplicationHelper
     @page = params[:page].nil? ? 0 : params[:page].to_i
     @page * Settings.organizations.per_page + index + 1
   end
+
+  def is_root_page
+    current_page? root_url
+  end
 end

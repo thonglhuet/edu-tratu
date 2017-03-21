@@ -157,8 +157,9 @@ footer {
     margin-top: 100px;
 
     .box-search {
-      background-color: $deep-koamaru-color;
       border-radius: 4px;
+      padding-left: 0;
+      padding-right: 0;
       padding-top: 34px;
 
       .category-list {

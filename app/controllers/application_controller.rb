@@ -26,6 +26,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from CanCan::AccessDenied do
+    flash["alert"] = t "error_denied"
+    redirect_to root_path
+  end
+
   private
 
   def configure_permitted_parameters
