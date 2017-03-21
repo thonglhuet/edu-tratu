@@ -33,4 +33,10 @@ class ApplicationController < ActionController::Base
        user_params.permit :name, :email, :password, :password_confirmation
     end
   end
+
+  class NullDictionary
+    def words
+      {}
+    end
+  end
 end

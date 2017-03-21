@@ -53,6 +53,7 @@ var NewCategoryForm = React.createClass({
     var formGroupClass = this.state.formErrors["name"] ? "form-group has-error" : "form-group"
     return(
       <div className= {formGroupClass}>
+        <label>Category Name<span className='require'>*</span></label>
         <input
           name="category[name]"
           type="string"
@@ -69,6 +70,7 @@ var NewCategoryForm = React.createClass({
     var formGroupClass = this.state.formErrors["description"] ? "form-group has-error" : "form-group"
     return(
       <div className= {formGroupClass}>
+        <label>Category Description<span className='require'>*</span></label>
         <textarea
           name="category[description]"
           placeholder="Category Description"
@@ -101,8 +103,11 @@ var NewCategoryForm = React.createClass({
                   {this.renderCategoryNameField()}
                   {this.renderCategoryDescriptionField()}
                   <div className='row'>
-                    <div className='col-sm-4'>
+                    <div className='col-sm-2'>
                       <input type="submit" value="Save" className='btn btn-primary' />
+                    </div>
+                    <div className='col-sm-2'>
+                      <button type='button' className='btn btn-danger' data-dismiss='modal'>Close</button>
                     </div>
                   </div>
               </form>
