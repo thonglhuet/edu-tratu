@@ -11,6 +11,8 @@ class User < ApplicationRecord
   has_many :organizations, through: :organization_members
 
   enum role: [:admin, :user]
+  scope :sought, ->(q, user_id) { where "name LIKE ? AND id <> ?",
+    "%#{q}%", "#{user_id}" if q.present? }
 
   class << self
     def from_omniauth auth

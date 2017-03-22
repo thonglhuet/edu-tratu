@@ -14,5 +14,7 @@ Rails.application.routes.draw do
   end
   namespace :api do
     get "/words", to: "words#index"
+    get "/users", to: "users#index"
+    get "/organizations", to: "organizations#index"
   end
 end

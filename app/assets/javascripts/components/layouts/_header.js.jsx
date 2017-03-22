@@ -5,7 +5,8 @@ var Header = React.createClass({
       signedIn: null,
       showModal: false,
       user: null,
-      is_root_page: this.props.current_page
+      is_root_page: this.props.current_page,
+      showOrganizationModal: false
     }
   },
   componentWillMount: function(){
@@ -46,6 +47,18 @@ var Header = React.createClass({
       url: '/users/sign_out'
     }).done(function(){
       location.reload();
+    })
+  },
+  handleHideOrganizationModal: function(e){
+    e.preventDefault();
+    this.setState({
+      showOrganizationModal: false
+    })
+  },
+  handleShowOrganizationModal: function(e){
+    e.preventDefault();
+    this.setState({
+      showOrganizationModal: true
     })
   },
   render: function(){
@@ -92,6 +105,7 @@ var Header = React.createClass({
                   <li><a href='/dictionaries'>Dictionary</a></li>
                   <li><a href=''>About</a></li>
                   <li><a href=''>Contact</a></li>
+                  <li><a href='' onClick={this.handleShowOrganizationModal}>Organization</a></li>
                 </ul>
                 <ul className='nav navbar-nav navbar-right'>
                   {this.state.signedIn ? user : null}
@@ -124,6 +138,8 @@ var Header = React.createClass({
           </div>
         </div>
         {this.state.showModal ? <Login handleHideModal={this.handleHideModal} /> : null}
+        {this.state.showOrganizationModal ? <OrgModal
+          handleHideModal={this.handleHideOrganizationModal} /> : null}
       </div>
     )
   }
